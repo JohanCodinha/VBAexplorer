@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import * as getters from './getters';
 import * as actions from './actions';
-import * as mutations from './mutations';
+import mutations from './mutations';
 
 Vue.use(Vuex);
 
@@ -14,9 +14,10 @@ const state = {
   token: null /* jwt token to acces the VBA API */,
 };
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state,
   actions,
-  getters,
   mutations,
+  getters,
 });
+export default store;

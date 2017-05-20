@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import * as types from './mutations-types';
+import * as types from './mutation-types';
 
 export default {
   [types.SET_TOKEN] (state, token) {
@@ -16,7 +16,9 @@ export default {
   [types.SET_SEARCH_RADIUS] (state, radiusInMeter) {
     Vue.set(state, 'radiusInMeter', radiusInMeter);
   },
-  [types.ADD_SPECIE] () {},
+  [types.ADD_SPECIE] (state, specie) {
+    Vue.set(state, 'species', [...state.species, specie]);
+  },
   [types.ADD_RECORD] (state, record) {
     Vue.set(state, 'records', [...state.records, record]);
   },

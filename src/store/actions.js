@@ -1,14 +1,18 @@
-import { guestLogin, recordsByPosition, speciesByPosition } from '../api/vba';
+import { guestLogin, /* recordsByPosition,*/ speciesByPosition } from '../api/vba';
 import * as types from './mutation-types';
 
-
-export const fetchToken = ({ commit }) => {
+export const fetchToken = ({ commit }) => new Promise((resolve, reject) => {
   guestLogin()
     .then((token) => {
+      if (!token) {
+        reject(new Error('failled to fetch token'));
+      }
       console.log('response body : ', token);
       commit('SET_TOKEN', token);
+      resolve();
     });
-};
+});
+
 
 export const getPosition = ({ commit }) => {
   const options = {
@@ -38,31 +42,28 @@ export const getPosition = ({ commit }) => {
         });
       }, options);
   })
-  // -36.731842, 147.812758
-  // eslint-disable-next-line
-  // return new Promise((resolve, reject) => {
-  //   resolve({ accu: '12', lat: '-36.731842', long: '147.812758' });
-  // })
-  .then(position => commit('SET_POSITION', position))
+  .then(position => commit(types.SET_POSITION, position))
   .catch(error => console.log(error));
 };
 
-
-export const searchRecords = ({ commit, state }) => {
-  const token = state.token;
+export const searchSpecies = ({ commit, state, getters }) => {
+  const token = getters.accesToken;
+  debugger;
   const position = {
     lat: state.position.latitude,
     long: state.position.longitude,
     rad: state.searchRadius,
   };
   // fetch species
-  speciesByPosition(position, token)
-    .then((species) => {
-      species.forEach(specie => commit(types.SET_SPECIE, specie));
-    });
-  // fetch records
-  recordsByPosition(position, token)
-    .then((records) => {
-      records.forEach(record => commit(types.SET_RECORD, record));
-    });
+  return new Promise((resolve, reject) => {
+    speciesByPosition(position, token)
+      .then((species) => {
+        if (!species) {
+          return reject(new Error('Species search failled'));
+        }
+        species.forEach(specie => commit(types.ADD_SPECIE, specie));
+        return resolve(species.length);
+      })
+      .catch(error => console.log(error));
+  });
 };

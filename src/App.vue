@@ -8,6 +8,10 @@
 <script>
 export default {
   name: 'app',
+  beforeMount () {
+    this.$store.dispatch('fetchToken')
+      .catch(error => console.log(error));
+  },
 };
 </script>
 
