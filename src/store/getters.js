@@ -12,6 +12,26 @@ const distanceBetweenCoordinates = (lat1, lon1, lat2, lon2) => {
   return earthRadiusKm * c;
 };
 
+// export const userPosition = (state) => {
+//   const position = state.position;
+//   if (position) {
+//     return position;
+//   }
+//   return false;
+// };
+
+export const searchArea = (state) => {
+  const position = state.position;
+  if (position) {
+    return {
+      lat: position.latitude,
+      long: position.longitude,
+      rad: state.searchRadius,
+    };
+  }
+  return false;
+};
+
 export const accesToken = (state) => {
   const token = state.token;
   if (token && (Date.now() - token.timestamp) < (28 * 60 * 1000)) {

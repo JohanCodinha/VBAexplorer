@@ -60,20 +60,27 @@ function speciesByPosition (position, token, commit) {
   });
 }
 
-export const fetchSpecies = ({ commit, state, getters, dispatch }) => {
+export const fetchSpecies = ({ commit, getters, dispatch }) => {
   const token = getters.accesToken;
-  const position = {
-    lat: state.position.latitude,
-    long: state.position.longitude,
-    rad: state.searchRadius,
-  };
+  const searchArea = getters.searchArea;
+
   if (!token) {
     return dispatch('fetchToken')
       .then(() => {
+        if (!searchArea) {
+          return dispatch('getPosition');
+        }
+        return searchArea;
+      })
+      .then(() => {
         const freshToken = getters.accesToken;
-        return speciesByPosition(position, freshToken, commit);
+        return speciesByPosition(searchArea, freshToken, commit);
       });
   }
   // fetch species
-  return speciesByPosition(position, token, commit);
+  return dispatch('getPosition')
+    .then(() => {
+      const freshSearchArea = getters.searchArea;
+      return speciesByPosition(freshSearchArea, token, commit);
+    });
 };

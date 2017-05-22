@@ -11,6 +11,7 @@ const state = {
   species: [/* species found at locations */],
   speciesData: {/* [id: number]: Data */},
   searchRadius: 250, /* in Meters */
+  position: null, /* {latitude, longitude, accuracy, timestamp} */
   token: null /* jwt token to acces the VBA API */,
 };
 
