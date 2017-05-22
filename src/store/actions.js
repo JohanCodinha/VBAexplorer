@@ -15,35 +15,40 @@ export const fetchToken = ({ commit }) => new Promise((resolve, reject) => {
 
 
 export const getPosition = ({ commit }) => {
-  const options = {
-    enableHighAccuracy: true,
-    timeout: 10000,
-    maximumAge: 0,
-  };
-  return new Promise((resolve, reject) => {
-    if (!('geolocation' in navigator)) {
-      reject(new Error("Device doesn't support geolocation"));
-    }
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const accuracy = pos.coords.accuracy;
-        const latitude = pos.coords.latitude;
-        const longitude = pos.coords.longitude;
-        console.log(`Position aquired, accuracy : ${pos.coords.accuracy}`);
-        resolve({ accuracy, latitude, longitude });
-      },
-      (err) => {
-        // On error default to set location.
-        console.log(new Error(err.message));
-        resolve({
-          accuracy: '12',
-          latitude: '-36.731842',
-          longitude: '147.812758',
-        });
-      }, options);
-  })
-  .then(position => commit(types.SET_POSITION, position))
-  .catch(error => console.log(error));
+  commit(types.SET_POSITION, {
+    accuracy: '12',
+    latitude: '-36.731842',
+    longitude: '147.812758',
+  });
+  // const options = {
+  //   enableHighAccuracy: true,
+  //   timeout: 10000,
+  //   maximumAge: 0,
+  // };
+  // return new Promise((resolve, reject) => {
+  //   if (!('geolocation' in navigator)) {
+  //     reject(new Error("Device doesn't support geolocation"));
+  //   }
+  //   navigator.geolocation.getCurrentPosition(
+  //     (pos) => {
+  //       const accuracy = pos.coords.accuracy;
+  //       const latitude = pos.coords.latitude;
+  //       const longitude = pos.coords.longitude;
+  //       console.log(`Position aquired, accuracy : ${pos.coords.accuracy}`);
+  //       resolve({ accuracy, latitude, longitude });
+  //     },
+  //     (err) => {
+  //       // On error default to set location.
+  //       console.log(new Error(err.message));
+  //       resolve({
+  //         accuracy: '12',
+  //         latitude: '-36.731842',
+  //         longitude: '147.812758',
+  //       });
+  //     }, options);
+  // })
+  // .then(position => commit(types.SET_POSITION, position))
+  // .catch(error => console.log(error));
 };
 
 function speciesByPosition (position, token, commit) {
@@ -65,22 +70,27 @@ export const fetchSpecies = ({ commit, getters, dispatch }) => {
   const searchArea = getters.searchArea;
 
   if (!token) {
+    console.log('no token found');
     return dispatch('fetchToken')
       .then(() => {
         if (!searchArea) {
+          console.log('no pos found');
           return dispatch('getPosition');
         }
         return searchArea;
       })
       .then(() => {
         const freshToken = getters.accesToken;
-        return speciesByPosition(searchArea, freshToken, commit);
+        const freshSearchArea = getters.searchArea;
+        return speciesByPosition(freshSearchArea, freshToken, commit);
       });
   }
-  // fetch species
-  return dispatch('getPosition')
-    .then(() => {
-      const freshSearchArea = getters.searchArea;
-      return speciesByPosition(freshSearchArea, token, commit);
-    });
+  if (!searchArea) {
+    return dispatch('getPosition')
+      .then(() => {
+        const freshSearchArea = getters.searchArea;
+        return speciesByPosition(freshSearchArea, token, commit);
+      });
+  }
+  return speciesByPosition(searchArea, token, commit);
 };

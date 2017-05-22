@@ -34,22 +34,15 @@ export default {
   },
   methods: {
     browse () {
+      const router = this.$router;
       const button = this.button;
       button.disabled = true;
+      button.message = 'Searching species';
       this.$store.dispatch('fetchSpecies')
-      .then((speciesCount) => {
-        console.log(`found ${speciesCount} species`);
-      });
-      // button.message = 'Getting location';
-      // this.$store.dispatch('getPosition')
-      //   .then(() => {
-      //     button.message = 'Searching species';
-      //     return this.$store.dispatch('fetchSpecies');
-      //   })
-      //   .then((speciesCount) => {
-      //     console.log(`found ${speciesCount} species`);
-      //   })
-      //   .catch(error => console.log(error));
+        .then((speciesCount) => {
+          console.log(`found ${speciesCount} species`);
+          router.push('Species');
+        });
     },
   },
 };
