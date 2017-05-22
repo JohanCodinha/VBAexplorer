@@ -1,6 +1,5 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
     <h2>Welcome to Bio scan</h2>
     <p>Explore nearby recording of species. </p>
     <p>Specie's records are provided by the <a href="https://vba.dse.vic.gov.au/vba/">Victorian Biodiversity Atlas</a>.
@@ -13,7 +12,7 @@
     <p>
       This is a <a href="https://www.delwp.vic.gov.au">DELWP</a> and <a href="www.codeforaustralia.org/">Code for Australia</a> project.
     </p>
-    <button @click="browse" >Browse</button>
+    <button :disabled="button.state" @click="browse">{{button.message}}</button>
     <ul>
       <router-link to="/">Go home</router-link>
       <router-link to="/species">Go to Species</router-link>
@@ -27,13 +26,22 @@ export default {
   name: 'homepage',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
+      button: {
+        message: 'Browse',
+        disabled: false,
+      },
     };
   },
   methods: {
     browse () {
+      const button = this.button;
+      button.disabled = true;
+      button.message = 'Getting location';
       this.$store.dispatch('getPosition')
-        .then(() => this.$store.dispatch('searchSpecies'))
+        .then(() => {
+          button.message = 'Searching species';
+          return this.$store.dispatch('fetchSpecies');
+        })
         .then((speciesCount) => {
           console.log(`found ${speciesCount} species`);
         })

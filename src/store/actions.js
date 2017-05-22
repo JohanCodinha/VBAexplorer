@@ -1,4 +1,4 @@
-import { guestLogin, /* recordsByPosition,*/ speciesByPosition } from '../api/vba';
+import { guestLogin, /* recordsByPosition,*/ searchSpecies } from '../api/vba';
 import * as types from './mutation-types';
 
 export const fetchToken = ({ commit }) => new Promise((resolve, reject) => {
@@ -9,7 +9,7 @@ export const fetchToken = ({ commit }) => new Promise((resolve, reject) => {
       }
       console.log('response body : ', token);
       commit('SET_TOKEN', token);
-      resolve();
+      resolve(token);
     });
 });
 
@@ -46,17 +46,9 @@ export const getPosition = ({ commit }) => {
   .catch(error => console.log(error));
 };
 
-export const searchSpecies = ({ commit, state, getters }) => {
-  const token = getters.accesToken;
-  debugger;
-  const position = {
-    lat: state.position.latitude,
-    long: state.position.longitude,
-    rad: state.searchRadius,
-  };
-  // fetch species
+function speciesByPosition (position, token, commit) {
   return new Promise((resolve, reject) => {
-    speciesByPosition(position, token)
+    searchSpecies(position, token)
       .then((species) => {
         if (!species) {
           return reject(new Error('Species search failled'));
@@ -66,4 +58,22 @@ export const searchSpecies = ({ commit, state, getters }) => {
       })
       .catch(error => console.log(error));
   });
+}
+
+export const fetchSpecies = ({ commit, state, getters, dispatch }) => {
+  const token = getters.accesToken;
+  const position = {
+    lat: state.position.latitude,
+    long: state.position.longitude,
+    rad: state.searchRadius,
+  };
+  if (!token) {
+    return dispatch('fetchToken')
+      .then(() => {
+        const freshToken = getters.accesToken;
+        return speciesByPosition(position, freshToken, commit);
+      });
+  }
+  // fetch species
+  return speciesByPosition(position, token, commit);
 };

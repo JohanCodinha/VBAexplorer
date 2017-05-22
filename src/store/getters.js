@@ -2,12 +2,10 @@ const toRad = value => (value * Math.PI) / 180;
 
 const distanceBetweenCoordinates = (lat1, lon1, lat2, lon2) => {
   const earthRadiusKm = 6371;
-
   const dLat = toRad(lat2 - lat1);
   const dLon = toRad(lon2 - lon1);
   const lat1Rad = toRad(lat1);
   const lat2Rad = toRad(lat2);
-
   const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
           Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1Rad) * Math.cos(lat2Rad);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
@@ -16,12 +14,11 @@ const distanceBetweenCoordinates = (lat1, lon1, lat2, lon2) => {
 
 export const accesToken = (state) => {
   const token = state.token;
-  const tokenLifetime = Date.now() - token.timestamp;
-  debugger;
-  if (token && tokenLifetime < (28 * 60 * 1000)) {
+  if (token && (Date.now() - token.timestamp) < (28 * 60 * 1000)) {
+    console.log(`Token aged : ${(Date.now() - token.timestamp) / 1000}s requested`);
     return token.value;
   }
-  return new Error('no valid token available in store.');
+  return false;
 };
 
 export const species = (state) => {
@@ -47,7 +44,6 @@ export const records = (state) => {
   const recordsWithDistance = storeRecords.map((record) => {
     const recordLat = record.latitudeddNum;
     const recordLon = record.longitudeddNum;
-
     const distance = distanceBetweenCoordinates(userLat, userLon, recordLat, recordLon);
     return Object.assign({}, record, { distance });
   });

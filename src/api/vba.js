@@ -7,7 +7,7 @@ export const guestLogin = () => axios
   .then(res => res.data.jwt)
   .catch(error => console.log(error.message));
 
-export const speciesByPosition = (position, token) => axios
+export const searchSpecies = (position, token) => axios
   .get(`${apiUrl}/search/point`, {
     headers: { 'x-access-token': token },
     params: position,
