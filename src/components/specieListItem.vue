@@ -1,10 +1,9 @@
 <template>
   <li class="md-list-item"
-    @click="goToSpecieDetail">
+    @click="$router.push({ name: 'SpecieDetail', params: { taxonId: taxonId } })">
     <div class="avatar">
       <img :src="thumbnail">
     </div>
-
     <div>
       <div>
         <div>
@@ -53,13 +52,6 @@ export default {
     },
   },
   methods: {
-    // selectSpecie () {
-    //   const taxonId = this.taxonId;
-    //   this.$store.dispatch('setSpecieDetail', taxonId);
-    // },
-    goToSpecieDetail () {
-      this.$router.push('SpecieDetail');
-    },
   },
   computed: {
     obs () {

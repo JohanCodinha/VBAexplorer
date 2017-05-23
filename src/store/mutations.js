@@ -13,8 +13,8 @@ export default {
     const timestamp = Date.now();
     Vue.set(state, 'position', { latitude, longitude, accuracy, timestamp });
   },
-  [types.SET_SEARCH_RADIUS] (state, radiusInMeter) {
-    Vue.set(state, 'radiusInMeter', radiusInMeter);
+  [types.SET_SEARCH_RADIUS] (state, radius) {
+    Vue.set(state, 'searchRadius', radius);
   },
   [types.ADD_SPECIE] (state, specie) {
     Vue.set(state, 'species', [...state.species, specie]);

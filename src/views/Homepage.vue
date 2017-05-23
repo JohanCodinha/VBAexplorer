@@ -41,7 +41,7 @@ export default {
       this.$store.dispatch('SEARCH_SPECIES')
         .then((speciesCount) => {
           console.log(`found ${speciesCount} species`);
-          router.push('Species');
+          router.push({ name: 'Species' });
         });
     },
   },

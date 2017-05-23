@@ -24,6 +24,8 @@ export const searchArea = (state) => {
   return false;
 };
 
+export const searchRadius = state => state.searchRadius;
+
 export const accesToken = (state) => {
   const token = state.token;
   if (token && (Date.now() - token.timestamp) < (28 * 60 * 1000)) {

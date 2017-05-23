@@ -2,16 +2,18 @@
   <div id="app">
     <img src="./assets/logo.png">
     <router-view></router-view>
+    <sidePanel></sidePanel>
   </div>
 </template>
 
 <script>
+import sidePanel from './views/SidePanel';
+
 export default {
   name: 'app',
-  // beforeMount () {
-  //   this.$store.dispatch('fetchToken')
-  //     .catch(error => console.log(error));
-  // },
+  components: {
+    sidePanel,
+  },
 };
 </script>
 
