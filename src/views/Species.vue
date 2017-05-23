@@ -3,9 +3,16 @@
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <ul>
-      <li v-for="specie in species">
-        <p>{{specie.commonNme}}</p>
-      </li>
+      <template v-for="specie in species">      
+        <specieListItem
+          :commonName="specie.commonNme"
+          :conservationStatus="specie.conservationStatus"
+          :scientificName="specie.scientificDisplayNme"
+          :taxonId="specie.taxonId"
+          :lastRecord="specie.lastRecord"
+          :key="specie.scientificDisplayNme">
+        </specieListItem>
+      </template>
     </ul>
       <router-link to="/">Go home</router-link>
       <router-link to="/species">Go to Species</router-link>
@@ -14,8 +21,13 @@
 </template>
 
 <script>
+import specieListItem from '../components/specieListItem';
+
 export default {
   name: 'hello',
+  components: {
+    specieListItem,
+  },
   data () {
     return {
       msg: 'Species page',

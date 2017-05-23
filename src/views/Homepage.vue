@@ -38,7 +38,7 @@ export default {
       const button = this.button;
       button.disabled = true;
       button.message = 'Searching species';
-      this.$store.dispatch('fetchSpecies')
+      this.$store.dispatch('SEARCH_SPECIES')
         .then((speciesCount) => {
           console.log(`found ${speciesCount} species`);
           router.push('Species');
