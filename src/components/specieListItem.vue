@@ -1,22 +1,20 @@
 <template>
-  <li class="md-list-item"
+  <li class="specie-li"
     @click="$router.push({ name: 'SpecieDetail', params: { taxonId: taxonId } })">
     <div class="avatar">
       <img :src="thumbnail">
     </div>
-    <div>
-      <div>
-        <div>
-          <p>{{commonName}}</p>
-          <p v-if="conservationStatus">{{conservationStatus}}</p>
-        </div>
+    <div class="text-container">
+      <div class="toxonomy">
+        <p>{{commonName}}</p>
+        <p v-if="conservationStatus">{{conservationStatus}}</p>
         <p>{{scientificName}}</p>
       </div>
-    </div>
-      <div>
+      <div class="observation">
         <p v-show="obs">{{ obs }} Observation{{obs > 1 ? 's':''}}<p>
         <p>Last from {{lastObs}}</p>
       </div>
+    </div>
     </div>
   </li>
 </template>
@@ -66,3 +64,30 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.specie-li {
+  display: flex;
+  align-items: center;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+}
+
+.avatar img {
+  object-fit: cover;
+  width: 100%;
+}
+
+</style>

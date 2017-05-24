@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="slideout-menu">
     <p>Position :</p>
     <label>Latitude <input type="number" :value="latitude" placeholder="unknown"></label>
     <label>Longitude <input type="number" :value="longitude" placeholder="unknown"></label>
@@ -47,3 +47,17 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.slideout-menu {
+  -webkit-overflow-scrolling: touch;
+  bottom: 0;
+  left: auto;
+  overflow-y: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 268px;
+  z-index: 0
+}
+</style>

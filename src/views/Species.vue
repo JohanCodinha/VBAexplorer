@@ -1,9 +1,8 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
     <ul>
-      <template v-for="specie in species">      
+      <template v-for="specie in paginated">      
         <specieListItem
           :commonName="specie.commonNme"
           :conservationStatus="specie.conservationStatus"
@@ -13,6 +12,11 @@
           :key="specie.scientificDisplayNme">
         </specieListItem>
       </template>
+    </ul>
+    <ul class="pagination">
+      <li v-for="pageNumber in totalPages" v-if="Math.abs(pageNumber - currentPage) < 2 || pageNumber == totalPages || pageNumber == 1">
+        <button href="#" @click="setPage(pageNumber)"  :class="{current: currentPage === pageNumber, last: (pageNumber == totalPages && Math.abs(pageNumber - currentPage) > 2), first:(pageNumber == 1 && Math.abs(pageNumber - currentPage) > 2)}">{{ pageNumber }}</button>
+      </li>
     </ul>
       <router-link to="/">Go home</router-link>
       <router-link to="/species">Go to Species</router-link>
@@ -31,11 +35,29 @@ export default {
   data () {
     return {
       msg: 'Species page',
+      currentPage: 1,
+      itemsPerPage: 8,
     };
   },
   computed: {
     species () {
       return this.$store.getters.species;
+    },
+    paginated () {
+      return this.paginate(this.species);
+    },
+    totalPages () {
+      return Math.ceil(this.species.length / this.itemsPerPage);
+    },
+  },
+  methods: {
+    paginate (list) {
+      const sliceIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const paginatedList = list.slice(sliceIndex, sliceIndex + this.itemsPerPage);
+      return paginatedList;
+    },
+    setPage (pageNumber) {
+      this.currentPage = pageNumber;
     },
   },
 };
@@ -52,10 +74,10 @@ ul {
   padding: 0;
 }
 
-li {
+/*li {
   display: inline-block;
   margin: 0 10px;
-}
+}*/
 
 a {
   color: #42b983;

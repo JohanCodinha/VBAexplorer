@@ -6,14 +6,13 @@ export const FETCH_TOKEN = ({ commit }) =>
     guestLogin()
       .then((token) => {
         if (!token) {
-          reject(new Error('failled to fetch token'));
+          return reject(new Error('failled to fetch token'));
         }
         console.log('response body : ', token);
         commit('SET_TOKEN', token);
-        resolve(token);
+        return resolve(token);
       });
-  });
-
+  }).catch(err => console.log(err));
 
 export const GET_POSITION = ({ commit }) => {
   // commit(types.SET_POSITION, {
@@ -62,6 +61,9 @@ export const SEARCH_SPECIES = async ({ commit, getters, dispatch }) => {
   const token = getters.accesToken;
   const searchArea = getters.searchArea;
   // return speciesByPosition(searchArea, token, commit);
+  if (!token || !searchArea) {
+    throw new Error('Search could not be perform, missing search parameters and/or token');
+  }
   return searchSpecies(searchArea, token)
     .then((species) => {
       if (!species) {
