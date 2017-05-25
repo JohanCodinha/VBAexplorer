@@ -36,12 +36,14 @@ export const accesToken = (state) => {
 };
 
 export const species = (state) => {
-  if (!(state.species.length > 0)) return [];
+  if (state.species.length <= 0) return [];
   // countOfSightings
   const speciesList = state.species.reduce((accu, specie) => {
     if (Object.prototype.hasOwnProperty.call(specie, 'countOfSightings') && specie.countOfSightings > 0) {
+      Object.assign({}, specie, { records: [] });
       return [...accu, specie];
     }
+    console.log(`rejected specie ${specie}`);
     return accu;
   });
   if (!Array.isArray(speciesList)) return [speciesList];

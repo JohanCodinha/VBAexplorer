@@ -19,8 +19,10 @@ export default {
   [types.ADD_SPECIE] (state, specie) {
     Vue.set(state, 'species', [...state.species, specie]);
   },
-  [types.ADD_RECORD] (state, record) {
-    Vue.set(state, 'records', [...state.records, record]);
+  [types.ADD_RECORDS] (state, records) {
+    console.log(records, records[0]);
+    const updatedRecords = state.records.filter(record => record.taxonId !== records[0].taxonId);
+    Vue.set(state, 'records', [...updatedRecords, ...records]);
   },
   [types.HYDRATE_SPECIE] () {},
 };

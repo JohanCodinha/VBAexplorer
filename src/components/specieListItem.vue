@@ -11,7 +11,7 @@
         <p>{{scientificName}}</p>
       </div>
       <div class="observation">
-        <p v-show="obs">{{ obs }} Observation{{obs > 1 ? 's':''}}<p>
+        <p v-show="observationsCount">{{ observationsCount }} Observation{{observationsCount > 1 ? 's':''}}<p>
         <p>Last from {{lastObs}}</p>
       </div>
     </div>
@@ -42,6 +42,10 @@ export default {
       type: Number,
       default () { return undefined; },
     },
+    observationsCount: {
+      type: Number,
+      default () { return undefined; },
+    },
     thumbnail: {
       type: String,
       default () {
@@ -52,11 +56,11 @@ export default {
   methods: {
   },
   computed: {
-    obs () {
-      const id = this.taxonId;
-      const obs = this.$store.getters.records.filter(record => record.taxonId === id);
-      return obs.length;
-    },
+    // obs () {
+    //   if (Object.prototype.hasOwnProperty.call(specie, 'records')) {
+    //   }
+    //   return obs.length;
+    // },
     lastObs () {
       const lastRecord = this.lastRecord;
       return new Date(lastRecord).getFullYear();

@@ -9,6 +9,7 @@
           :scientificName="specie.scientificDisplayNme"
           :taxonId="specie.taxonId"
           :lastRecord="specie.lastRecord"
+          :observationsCount="specie.countOfSightings"
           :key="specie.scientificDisplayNme">
         </specieListItem>
       </template>
@@ -59,7 +60,20 @@ export default {
     setPage (pageNumber) {
       this.currentPage = pageNumber;
     },
+    hydrate (species) {
+      // console.log(species);
+      // if (!species.length) return;
+      species.forEach((specie) => {
+        if (!Object.prototype.hasOwnProperty.call(specie, 'records')) {
+          this.$store.dispatch('HYDRATE_SPECIE', specie.taxonId);
+        }
+      });
+    },
   },
+  watch: {
+    paginated: function paginationEvent (speciesOnDisplay) { this.hydrate(speciesOnDisplay); },
+  },
+  mounted: function mountedEvent () { this.hydrate(this.paginated); },
 };
 </script>
 
@@ -74,10 +88,14 @@ ul {
   padding: 0;
 }
 
-/*li {
-  display: inline-block;
-  margin: 0 10px;
-}*/
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination li {
+  margin-left: .5rem;
+}
 
 a {
   color: #42b983;

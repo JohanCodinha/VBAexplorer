@@ -1,6 +1,8 @@
 <template>
   <div class="hello">
     <h1>{{ taxonId }}</h1>
+    <ul>
+      <li v-for="record in records">{{record.observerFullName}}</li>
     </ul>
   </div>
 </template>
@@ -16,6 +18,10 @@ export default {
   computed: {
     taxonId () {
       return this.$route.params.taxonId;
+    },
+    records () {
+      const taxonId = this.taxonId;
+      return this.$store.getters.records.filter(record => record.taxonId === taxonId);
     },
   },
 };

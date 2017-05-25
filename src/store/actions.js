@@ -1,4 +1,7 @@
-import { guestLogin, /* recordsByPosition,*/ searchSpecies } from '../api/vba';
+import { guestLogin, specieRecords, searchSpecies } from '../api/vba';
+// import { searchMuseumSpecies } from '../api/museumVic';
+// import { searchALASpecies } from '../api/atlasLivingAus';
+// import { searchHerbariumSpecies } from '../api/herbarium';
 import * as types from './mutation-types';
 
 export const FETCH_TOKEN = ({ commit }) =>
@@ -73,4 +76,33 @@ export const SEARCH_SPECIES = async ({ commit, getters, dispatch }) => {
       return species.length;
     })
     .catch(error => console.log(error));
+};
+
+export const HYDRATE_SPECIE = async ({ commit, getters, dispatch }, taxonId) => {
+  console.log(`Hydrating ${taxonId}`);
+  // checking if taxonId has already been hydrated
+  const taxonIdHydrated = getters.records.find(record => record.taxonId === taxonId);
+  if (!taxonIdHydrated) {
+    commit('ADD_RECORDS', [{ taxonId, hydrated: Date.now() }]);
+  } else {
+    return;
+  }
+
+  if (!getters.accesToken) {
+    await dispatch('FETCH_TOKEN');
+  }
+  if (!getters.searchArea) {
+    await dispatch('GET_POSITION');
+  }
+  const token = getters.accesToken;
+  const searchArea = getters.searchArea;
+  // return speciesByPosition(searchArea, token, commit);
+  if (!token || !searchArea) {
+    throw new Error('Hydrating could not be perform, missing search parameters and/or token');
+  }
+  specieRecords(searchArea, taxonId, token)
+    .then((records) => {
+      console.log(`found ${records.length} obs for ${taxonId}`);
+      commit('ADD_RECORDS', records);
+    });
 };

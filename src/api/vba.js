@@ -15,10 +15,10 @@ export const searchSpecies = (position, token) => axios
   .then(res => res.data.records)
   .catch(error => console.log(error.message));
 
-export const recordsByPosition = (position, token) => axios
+export const specieRecords = (position, taxonId, token) => axios
   .get(`${apiUrl}/search/point`, {
     headers: { 'x-access-token': token },
-    params: Object.assign({}, position, { detail: true }),
+    params: Object.assign({}, position, { detail: true, taxonId }),
   })
   .then(res => res.data.records)
   .catch(error => console.log(error.message));
