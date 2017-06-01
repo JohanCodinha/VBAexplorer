@@ -1,7 +1,7 @@
 import { guestLogin, specieRecords, searchSpecies } from '../api/vba';
-// import { searchMuseumSpecies } from '../api/museumVic';
-// import { searchALASpecies } from '../api/atlasLivingAus';
-// import { searchHerbariumSpecies } from '../api/herbarium';
+import searchMuseumSpecies from '../api/museumVic';
+import searchALASpecies from '../api/atlasLivingAus';
+import searchHerbariumSpecies from '../api/herbarium';
 import * as types from './mutation-types';
 
 export const FETCH_TOKEN = ({ commit }) =>
@@ -78,14 +78,18 @@ export const SEARCH_SPECIES = async ({ commit, getters, dispatch }) => {
     .catch(error => console.log(error));
 };
 
-export const HYDRATE_SPECIE = async ({ commit, getters, dispatch }, taxonId) => {
-  console.log(`Hydrating ${taxonId}`);
+export const HYDRATE_SPECIE = async ({ commit, getters, dispatch }, specie) => {
+  const {
+    scientificNme: scientificName,
+    commonNme: commonName,
+    primaryCde: type,
+    taxonId } = specie;
+
+  console.log(`Hydrating ${commonName}`);
   // checking if taxonId has already been hydrated
   const taxonIdHydrated = getters.records.find(record => record.taxonId === taxonId);
-  if (!taxonIdHydrated) {
-    commit('ADD_RECORDS', [{ taxonId, hydrated: Date.now() }]);
-  } else {
-    return;
+  if (taxonIdHydrated) {
+    return Promise.resolve();
   }
 
   if (!getters.accesToken) {
@@ -96,11 +100,30 @@ export const HYDRATE_SPECIE = async ({ commit, getters, dispatch }, taxonId) => 
   }
   const token = getters.accesToken;
   const searchArea = getters.searchArea;
-  // return speciesByPosition(searchArea, token, commit);
   if (!token || !searchArea) {
     throw new Error('Hydrating could not be perform, missing search parameters and/or token');
   }
-  specieRecords(searchArea, taxonId, token)
+
+  // fetching museum specie
+  const taxonomy = { scientificName, commonName };
+  // eslint-disable-next-line
+  let specieData;
+  // let herbariumData;
+  // let museumData;
+  // let alaData;
+
+  if (type === 'Flora') {
+    specieData = await searchHerbariumSpecies(taxonomy) ||
+      await searchALASpecies(taxonomy) ||
+      await searchMuseumSpecies(taxonomy);
+  } else {
+    specieData = await searchMuseumSpecies(taxonomy) ||
+      await searchALASpecies(taxonomy) ||
+      await searchHerbariumSpecies(taxonomy);
+  }
+
+  // console.log(specieData);
+  return specieRecords(searchArea, taxonId, token)
     .then((records) => {
       console.log(`found ${records.length} obs for ${taxonId}`);
       commit('ADD_RECORDS', records);

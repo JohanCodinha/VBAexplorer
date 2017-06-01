@@ -61,12 +61,8 @@ export default {
       this.currentPage = pageNumber;
     },
     hydrate (species) {
-      // console.log(species);
-      // if (!species.length) return;
       species.forEach((specie) => {
-        if (!Object.prototype.hasOwnProperty.call(specie, 'records')) {
-          this.$store.dispatch('HYDRATE_SPECIE', specie.taxonId);
-        }
+        this.$store.dispatch('HYDRATE_SPECIE', specie);
       });
     },
   },
