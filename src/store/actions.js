@@ -11,7 +11,7 @@ export const FETCH_TOKEN = ({ commit }) =>
         if (!token) {
           return reject(new Error('failled to fetch token'));
         }
-        console.log('response body : ', token);
+        console.log(`response body : ${token.slice(5)}...`);
         commit('SET_TOKEN', token);
         return resolve(token);
       });
@@ -84,8 +84,6 @@ export const HYDRATE_SPECIE = async ({ commit, getters, dispatch }, specie) => {
     commonNme: commonName,
     primaryCde: type,
     taxonId } = specie;
-
-  console.log(`Hydrating ${commonName}`);
   // checking if taxonId has already been hydrated
   const taxonIdHydrated = getters.records.find(record => record.taxonId === taxonId);
   if (taxonIdHydrated) {
@@ -103,15 +101,11 @@ export const HYDRATE_SPECIE = async ({ commit, getters, dispatch }, specie) => {
   if (!token || !searchArea) {
     throw new Error('Hydrating could not be perform, missing search parameters and/or token');
   }
-
-  // fetching museum specie
+  // fetch specie records in parallel
+  const fetchRecords = specieRecords(searchArea, taxonId, token);
   const taxonomy = { scientificName, commonName };
-  // eslint-disable-next-line
   let specieData;
-  // let herbariumData;
-  // let museumData;
-  // let alaData;
-
+  // If specie is flora, look first at the herbarium.
   if (type === 'Flora') {
     specieData = await searchHerbariumSpecies(taxonomy) ||
       await searchALASpecies(taxonomy) ||
@@ -122,10 +116,12 @@ export const HYDRATE_SPECIE = async ({ commit, getters, dispatch }, specie) => {
       await searchHerbariumSpecies(taxonomy);
   }
 
-  // console.log(specieData);
-  return specieRecords(searchArea, taxonId, token)
-    .then((records) => {
-      console.log(`found ${records.length} obs for ${taxonId}`);
-      commit('ADD_RECORDS', records);
-    });
+  commit('ADD_SPECIE_DATA', specieData);
+  const records = await fetchRecords;
+  commit('ADD_RECORDS', records);
+
+  console.log(`Hydrating ${commonName} :
+    records found ${records.length}.
+    Data found : ${!!specieData}`);
+  return Promise.resolve();
 };

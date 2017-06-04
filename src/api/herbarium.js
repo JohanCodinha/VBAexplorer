@@ -21,7 +21,7 @@ function fetchHerbariumSpecies (taxonomy) {
 const searchHerbariumSpecies = async (taxonomy) => {
   const response = await fetchHerbariumSpecies(taxonomy);
   const images = validateResponse(response, taxonomy);
-  if (!images) return false;
+  if (!images.length) return false;
   const orderedByHeroImg = images.sort((a, b) => {
     if (a.isHeroImage === true && b.isHeroImage === false) {
       return -1;
@@ -31,7 +31,7 @@ const searchHerbariumSpecies = async (taxonomy) => {
     }
     return 0;
   });
-
+  console.log(orderedByHeroImg);
   const specieData = {
     // distribution: specie.distribution,
     // habitat: specie.habitat,

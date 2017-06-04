@@ -33,7 +33,7 @@ const searchMuseumSpecies = async (taxonomy) => {
     biology: specie.biology,
     generalDescription: specie.generalDescription,
     images: specie.media.slice(0, specie.media.length - 1).map((media) => {
-      return {
+      const image = {
         alternativeText: media.alternativeText,
         medium: media.medium.uri,
         thumbnail: media.thumbnail.uri,
@@ -41,6 +41,7 @@ const searchMuseumSpecies = async (taxonomy) => {
         creator: media.creators[0],
         source: media.sources[0],
       };
+      return image;
     }),
   };
   // console.log(specieData);

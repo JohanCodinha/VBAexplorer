@@ -9,7 +9,7 @@ Vue.use(Vuex);
 const state = {
   records: [/* sightening records from the VBA */],
   species: [/* species found at locations */],
-  speciesData: {/* [id: number]: Data */},
+  speciesData: [/* species Data*/],
   searchRadius: 250, /* in Meters */
   position: null, /* {latitude, longitude, accuracy, timestamp} */
   token: null /* jwt token to acces the VBA API */,
