@@ -42,9 +42,9 @@ const searchHerbariumSpecies = async (taxonomy) => {
       return {
         // alternativeText: media.alternativeText,
         medium: media.accessPoints.data
-          .find(d => d.variant === 'preview').accesURI,
+          .find(d => d.variant === 'preview').accessURI,
         thumbnail: media.accessPoints.data
-          .find(d => d.variant === 'thumbnail').accesURI,
+          .find(d => d.variant === 'thumbnail').accessURI,
         // caption: media.caption,
         creator: media.creator,
         source: media.source || 'Royal Botanic Garden Victoria',

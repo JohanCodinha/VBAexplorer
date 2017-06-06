@@ -1,15 +1,23 @@
 <template>
   <div class="slideout-menu">
-    <p>Position :</p>
-    <label>Latitude <input type="number" :value="latitude" placeholder="unknown"></label>
-    <label>Longitude <input type="number" :value="longitude" placeholder="unknown"></label>
-    <p>Search radius :</p>
-    <label for="selectRadius">Radius in meter</label>
-    <select name="selectRadius" v-model="searchRadius">
-      <option v-for="option in radiusOptions"
-        :value="option.value">{{ option.text }}</option>
-    </select>
-    <p>{{speciesCount}} species found</p>
+    <div class="content">
+      <h1>Settings</h1>
+      <h2>Position :</h2>
+      <div class="position">
+        <label>Latitude <input type="number" :value="latitude" placeholder="unknown"></label>
+        <label>Longitude <input type="number" :value="longitude" placeholder="unknown"></label>
+      </div>
+      <!-- <h2>Search radius :</h2> -->
+      <label for="selectRadius"><h2>Search radius :</h2></label>
+      <select name="selectRadius" v-model="searchRadius">
+        <option v-for="option in radiusOptions"
+          :value="option.value">{{ option.text }}</option>
+      </select>
+      <div class="stats">
+        <h2>Stats : </h2>
+        <p>{{ speciesCount }} species found</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -58,6 +66,31 @@ export default {
   right: 0;
   top: 0;
   width: 268px;
-  z-index: 0
+  z-index: 0;
+}
+
+.content { 
+  padding: 1rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin: .5rem;
+}
+
+h2 {
+  font-size: 1.125rem;
+  margin: .25rem;
+}
+
+.slideout-menu::before {
+  background: #00b7bd;
+  content: '';
+  display: block;
+  height: 3.125rem;
+  width: 100%;
+}
+.position {
+  margin-left: .5rem;
 }
 </style>

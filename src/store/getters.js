@@ -35,27 +35,14 @@ export const accesToken = (state) => {
   return false;
 };
 
-export const species = (state) => {
-  if (state.species.length <= 0) return [];
-  // countOfSightings
-  const speciesList = state.species.reduce((accu, specie) => {
-    if (Object.prototype.hasOwnProperty.call(specie, 'countOfSightings') && specie.countOfSightings > 0) {
-      Object.assign({}, specie, { records: [] });
-      return [...accu, specie];
-    }
-    console.log(`rejected specie ${specie}`);
-    return accu;
-  });
-  if (!Array.isArray(speciesList)) return [speciesList];
-  return speciesList;
-};
-
+export const species = state => state.species;
+export const speciesData = state => state.speciesData;
 export const records = (state) => {
   // calcul distance from record to user's position.
   const storeRecords = state.records;
   if (!storeRecords.length) return [];
-  const userLat = state.position.lat;
-  const userLon = state.position.long;
+  const userLat = state.position.latitude;
+  const userLon = state.position.longitude;
 
   const recordsWithDistance = storeRecords.map((record) => {
     const recordLat = record.latitudeddNum;

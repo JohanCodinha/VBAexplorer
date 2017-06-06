@@ -1,23 +1,31 @@
 <template>
   <div class="homepage-view">
-    <h1>Welcome to Bio scan</h1>
-    <p>Explore nearby recording of species. </p>
-    <p>Specie's records are provided by the <a href="https://vba.dse.vic.gov.au/vba/">Victorian Biodiversity Atlas</a>.
-    Biodiversity knowledge is comming from : </p>
-    <ul>
-      <li><a href="https://museumvictoria.com.au">Museums Victoria</a></li>
-      <li><a href="https://www.ala.org.au/">Atlas of Living Australia</a></li>
-      <li><a href="https://www.rbg.vic.gov.au/">Royal Botanic Gardens Victoria</a></li>
-    </ul>
-    <p>
-      This is a <a href="https://www.delwp.vic.gov.au">DELWP</a> and <a href="www.codeforaustralia.org/">Code for Australia</a> project.
-    </p>
-    <button class="browse-button" :disabled="button.state" @click="browse">{{button.message}}</button>
-    <ul>
+    <div class="hero-image">
+      <!-- <img src="../assets/Spiny-Rice-Flower.jpg"> -->
+    </div>
+    <div class="text-container">
+      <h1>Bio scan</h1>
+      <h2>Explore nearby recording of species.</h2>
+        <div class="action">
+          <button class="browse-button" :disabled="button.state" @click="browse">{{button.message}}</button>
+        </div>
+      <div class="text-intro">
+        <p>Specie's records are provided by the <a href="https://vba.dse.vic.gov.au/vba/">Victorian Biodiversity Atlas</a>.
+        Biodiversity knowledge is comming from : </p>
+        <ul>
+          <li><a href="https://museumvictoria.com.au">Museums Victoria</a></li>
+          <li><a href="https://www.ala.org.au/">Atlas of Living Australia</a></li>
+          <li><a href="https://www.rbg.vic.gov.au/">Royal Botanic Gardens Victoria</a></li>
+        </ul>
+        <p>
+          This is a <a href="https://www.delwp.vic.gov.au">DELWP</a> and <a href="www.codeforaustralia.org/">Code for Australia</a> project.
+        </p>
+      </div>
+    </div>
+<!--     <ul>
       <router-link to="/">Go home</router-link>
       <router-link to="/species">Go to Species</router-link>
-      <router-link to="/species/12334">Go to Specie 12334</router-link>
-    </ul>
+    </ul> -->
   </div>
 </template>
 
@@ -52,28 +60,35 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-/*h1, h2 {
-  font-weight: normal;
-}
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-*/
 .homepage-view {
+}
+
+.text-container {
   margin: 1rem;
 }
 
+.text-intro {
+  /*margin-top: 1rem;*/
+}
+
+.action {
+  display: flex;
+  justify-content: center;
+  margin: .8rem;
+}
+
+.hero-image {
+  height: 15rem;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url('../assets/Spiny-Rice-Flower.jpg')
+}
+
 .homepage-view h1 {
- font-size: 1.5rem;
+ font-size: 2.375rem;
 }
 
 .homepage-view .browse-button {

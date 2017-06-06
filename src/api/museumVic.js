@@ -5,7 +5,10 @@ function validateResponse (response, taxonomy) {
     const resultScientificName = specie.taxonomy.taxonName.toLowerCase();
     const specieScientificName = taxonomy.scientificName.toLowerCase();
     const specieCommonName = taxonomy.commonName.toLowerCase();
-    const resultCommonName = specie.taxonomy.commonName.toLowerCase();
+    // commonName might not always be present.
+    const resultCommonName = specie.taxonomy.commonName
+    ? specie.taxonomy.commonName.toLowerCase()
+    : undefined;
     const scientificNameMatch = resultScientificName === specieScientificName;
     const commonNameMatch = resultCommonName === specieCommonName;
     return scientificNameMatch || commonNameMatch;
@@ -33,13 +36,19 @@ const searchMuseumSpecies = async (taxonomy) => {
     biology: specie.biology,
     generalDescription: specie.generalDescription,
     images: specie.media.slice(0, specie.media.length - 1).map((media) => {
+      // console.log(media);
       const image = {
         alternativeText: media.alternativeText,
-        medium: media.medium.uri,
-        thumbnail: media.thumbnail.uri,
+        medium: media.medium
+          ? media.medium.uri
+          : null,
+        thumbnail: media.thumbnail
+          ? media.thumbnail.uri
+          : null,
         caption: media.caption,
         creator: media.creators[0],
         source: media.sources[0],
+        licence: media.licence.shortName || media.licence.name || null,
       };
       return image;
     }),

@@ -1,27 +1,31 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <div class="filter">
+      <p>Sort by :</p>
+      <select name="filter" v-model="selectedFilter">
+        <option v-for="filter in filters"
+          :value="filter.value">{{ filter.text }}</option>
+      </select>
+    </div>
     <ul>
-      <template v-for="specie in paginated">      
-        <specieListItem
-          :commonName="specie.commonNme"
-          :conservationStatus="specie.conservationStatus"
-          :scientificName="specie.scientificDisplayNme"
-          :taxonId="specie.taxonId"
-          :lastRecord="specie.lastRecord"
-          :observationsCount="specie.countOfSightings"
-          :key="specie.scientificDisplayNme">
-        </specieListItem>
-      </template>
+      <!-- <template v-for="specie in paginated">       -->
+      <specieListItem v-for="specie in paginated" class="specie-li"
+        :commonName="specie.commonName"
+        :conservationStatus="specie.conservationStatus"
+        :scientificName="specie.scientificDisplayName"
+        :taxonId="specie.taxonId"
+        :lastRecord="specie.lastRecord"
+        :observationsCount="specie.count"
+        :key="specie.scientificDisplayNme">
+      </specieListItem>
+      <!-- </template> -->
     </ul>
     <ul class="pagination">
       <li v-for="pageNumber in totalPages" v-if="Math.abs(pageNumber - currentPage) < 2 || pageNumber == totalPages || pageNumber == 1">
         <button href="#" @click="setPage(pageNumber)"  :class="{current: currentPage === pageNumber, last: (pageNumber == totalPages && Math.abs(pageNumber - currentPage) > 2), first:(pageNumber == 1 && Math.abs(pageNumber - currentPage) > 2)}">{{ pageNumber }}</button>
       </li>
     </ul>
-      <router-link to="/">Go home</router-link>
-      <router-link to="/species">Go to Species</router-link>
-      <router-link to="/species/12334">Go to Specie 12334</router-link>
+      <!-- <router-link to="/">Go home</router-link> -->
   </div>
 </template>
 
@@ -35,17 +39,32 @@ export default {
   },
   data () {
     return {
-      msg: 'Species page',
+      filters: [
+        { text: 'Common name', value: 'commonName' },
+        { text: 'Scientific name', value: 'scientificName' },
+        { text: 'Flora', value: 'flora' },
+        { text: 'Fauna', value: 'fauna' },
+        { text: 'Date', value: 'date' },
+        // { text: 'Distance', value: 'distance' },
+      ],
+      selectedFilter: 'commonName',
       currentPage: 1,
       itemsPerPage: 8,
     };
   },
   computed: {
+    // filter: {
+    //   get () { return this.selectedFilter; },
+    //   set (value) {
+    //     this.$store.commit('SET_SEARCH_RADIUS', value);
+    //   },
+    // },
     species () {
       return this.$store.getters.species;
     },
     paginated () {
-      return this.paginate(this.species);
+      const filtered = this.filter(this.species);
+      return this.paginate(filtered);
     },
     totalPages () {
       return Math.ceil(this.species.length / this.itemsPerPage);
@@ -65,6 +84,71 @@ export default {
         this.$store.dispatch('HYDRATE_SPECIE', specie);
       });
     },
+    filter (list) {
+      switch (this.selectedFilter) {
+        case 'commonName':
+          return this.byCommonName(list);
+        case 'scientificName':
+          return this.byScientificName(list);
+        case 'distance':
+          return this.byDistance(list);
+        case 'flora':
+          return this.byFlora(list);
+        case 'fauna':
+          return this.byFauna(list);
+        case 'date':
+          return this.byDate(list);
+        default:
+          return this.byCommonName(list);
+      }
+    },
+
+    byCommonName (list) {
+      const filteredSpecies = list.sort((a, b) => {
+        const nameA = a.commonName.toLowerCase();
+        const nameB = b.commonName.toLowerCase();
+        if (nameA < nameB) return -1; // sort string ascending
+        if (nameA > nameB) return 1;
+        return 0; // default return value (no sorting)
+      });
+      return filteredSpecies;
+    },
+
+    byScientificName (list) {
+      const filteredSpecies = list.sort((a, b) => {
+        const nameA = a.scientificDisplayName.toLowerCase();
+        const nameB = b.scientificDisplayName.toLowerCase();
+        if (nameA < nameB) return -1; // sort string ascending
+        if (nameA > nameB) return 1;
+        return 0; // default return value (no sorting)
+      });
+      return filteredSpecies || [];
+    },
+
+    byFlora (list) {
+      return list.filter(specie => specie.biota === 'Flora');
+    },
+
+    byFauna (list) {
+      // everything but flora
+      return list.filter(specie => specie.biota !== 'Flora');
+    },
+
+    byDate (list) {
+      const filteredSpecies = list.sort((a, b) => a.lastRecord - b.lastRecord);
+      return filteredSpecies;
+    },
+
+    // byDistance (list) {
+    //   const speciesWithClosestRecord = list.map((specie) => {
+    //     const taxonId = specie.taxonId;
+    //     const records = this.$store.getters.records.filter(record => record.taxonId === taxonId);
+    //     const closestRecord = records.sort((a, b) => a.distance - b.distance)[0];
+    //     return Object.assign({}, specie, { closestRecordDistance: closestRecord.distance });
+    //   });
+    //   return speciesWithClosestRecord
+    //     .sort((a, b) => a.closestRecordDistance - b.closestRecordDistance);
+    // },
   },
   watch: {
     paginated: function paginationEvent (speciesOnDisplay) { this.hydrate(speciesOnDisplay); },
@@ -87,6 +171,7 @@ ul {
 .pagination {
   display: flex;
   justify-content: center;
+  padding: 1rem;
 }
 
 .pagination li {
@@ -95,5 +180,15 @@ ul {
 
 a {
   color: #42b983;
+}
+.filter {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: .3rem;
+}
+
+.specie-li:nth-child(even) {
+  background-color: #f7f7f7;
 }
 </style>

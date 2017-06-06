@@ -4,7 +4,8 @@
     :style="{ transform: slideoutOpen ? 'translateX(-268px)' : 'translateX(0px)' }">
     <header>
       <div class="container">
-        <img src="./assets/logo-delwp.png">
+        <router-link to="/"><img src="./assets/logo-delwp.png"></router-link>
+        <!-- <img src="./assets/logo-delwp.png"> -->
         <p @click="menu" style="color: white">M</p>
       </div>
     </header>
@@ -36,15 +37,28 @@ export default {
 </script>
 
 <style scoped>
+
+@font-face {
+  font-family: 'delwp';
+  src: url('./assets/fonts/hinted-VIC-Regular.woff2') format('woff2');
+       /*url('../assets/fonts/ratio.woff') format('woff'),*/
+       /*url('../assets/fonts/ratio.ttf') format('truetype');*/
+  font-weight: normal;
+  font-style: normal;
+}
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'delwp', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+
 header {
   background-color: #201647;
-  padding: 0.5rem 0;
+  height: 3.125rem;
+  display: flex;
+  align-items: center;
 }
 
 .slideLeft {
@@ -59,6 +73,7 @@ header {
   padding-left: 1rem;
   padding-right: 1rem;
   display: flex;
+  flex: 1;
   justify-content: space-between;
 }
 header img {

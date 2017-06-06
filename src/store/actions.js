@@ -54,6 +54,67 @@ export const GET_POSITION = ({ commit }) => {
   .catch(error => console.log(error));
 };
 
+function convertConservation (status) {
+  if (!status) return null;
+  const threatenedRegex = [
+    /L/,
+    /P\s*L/,
+    /cr/,
+    /cr\s*dbt/,
+    /cr\s*L/,
+    /dd\s*L/,
+    /en\s*/,
+    /en\s*I/,
+    /en\s*L/,
+    /en\s*L\s*#/,
+    /ex\s*L/,
+    /k\s*\*/,
+    /k\s*L/,
+    /nt\s*L/,
+    /r/,
+    /r\s*#/,
+    /r\s*D/,
+    /r\s*L/,
+    /r\s*N/,
+    /r\s*X/,
+    /rx\s*L/,
+    /vu\s*/,
+    /vu\s*#/,
+    /vu\s*D/,
+    /vu\s*L/,
+    /vu\s*X/,
+    /CR\s*cr\s*L/,
+    /CR\s*dd\s*L/,
+  ];
+
+  const str = status.trim();
+  if (str === '*') return 'Not native';
+  const isThreatened = threatenedRegex.some(regex => str.search(regex) !== -1);
+  if (isThreatened) return 'Threatened';
+  return null;
+}
+
+function reshapeSpecie (specie) {
+  const template = {
+    conservationStatus: convertConservation(specie.conservationStatus),
+    count: specie.countOfSightings,
+    commonNameSynonym: specie.commonNmeSynonym,
+    commonName: specie.commonNme,
+    lastRecord: specie.lastRecord,
+    taxonId: specie.taxonId,
+    // originCategoryCde:"*"
+    // parentTaxonId:41055
+    scientificName: specie.scientificNme,
+    biota: specie.primaryCde,
+    scientificNameSynonym: specie.scientificNmeSynonym,
+    shortName: specie.shortName,
+    scientificDisplayName: specie.scientificDisplayNme,
+    // taxonLevelCde:"spec"
+    // taxonTypeCde:"mono"
+  };
+  return template;
+}
+
 export const SEARCH_SPECIES = async ({ commit, getters, dispatch }) => {
   if (!getters.accesToken) {
     await dispatch('FETCH_TOKEN');
@@ -70,9 +131,14 @@ export const SEARCH_SPECIES = async ({ commit, getters, dispatch }) => {
   return searchSpecies(searchArea, token)
     .then((species) => {
       if (!species) {
-        return new Error('Species search failled');
+        return new Error('No species found at location');
       }
-      species.forEach(specie => commit(types.ADD_SPECIE, specie));
+      species.forEach((specie) => {
+        if (Object.prototype.hasOwnProperty.call(specie, 'countOfSightings') && specie.countOfSightings > 0) {
+          const shapedSpecie = reshapeSpecie(specie);
+          commit(types.ADD_SPECIE, shapedSpecie);
+        }
+      });
       return species.length;
     })
     .catch(error => console.log(error));
@@ -80,9 +146,9 @@ export const SEARCH_SPECIES = async ({ commit, getters, dispatch }) => {
 
 export const HYDRATE_SPECIE = async ({ commit, getters, dispatch }, specie) => {
   const {
-    scientificNme: scientificName,
-    commonNme: commonName,
-    primaryCde: type,
+    scientificName,
+    commonName,
+    biota,
     taxonId } = specie;
   // checking if taxonId has already been hydrated
   const taxonIdHydrated = getters.records.find(record => record.taxonId === taxonId);
@@ -106,7 +172,7 @@ export const HYDRATE_SPECIE = async ({ commit, getters, dispatch }, specie) => {
   const taxonomy = { scientificName, commonName };
   let specieData;
   // If specie is flora, look first at the herbarium.
-  if (type === 'Flora') {
+  if (biota === 'Flora') {
     specieData = await searchHerbariumSpecies(taxonomy) ||
       await searchALASpecies(taxonomy) ||
       await searchMuseumSpecies(taxonomy);
@@ -115,6 +181,8 @@ export const HYDRATE_SPECIE = async ({ commit, getters, dispatch }, specie) => {
       await searchALASpecies(taxonomy) ||
       await searchHerbariumSpecies(taxonomy);
   }
+  // add taxonId to specieData
+  specieData.taxonId = taxonId;
 
   commit('ADD_SPECIE_DATA', specieData);
   const records = await fetchRecords;

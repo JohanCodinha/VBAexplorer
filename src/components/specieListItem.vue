@@ -5,9 +5,11 @@
       <img :src="thumbnail">
     </div>
     <div class="text-container">
-      <div class="toxonomy">
+      <div class="taxonomy">
+      <div class="top-row">
         <p>{{commonName}}</p>
-        <p v-if="conservationStatus">{{conservationStatus}}</p>
+        <p v-if="conservationStatus" class="status">{{conservationStatus}}</p>
+      </div>
         <p>{{scientificName}}</p>
       </div>
       <div class="observation">
@@ -46,12 +48,6 @@ export default {
       type: Number,
       default () { return undefined; },
     },
-    thumbnail: {
-      type: String,
-      default () {
-        return 'https://raw.githubusercontent.com/Ranks/emojione/2.2.7/assets/png_128x128/1f43e.png';
-      },
-    },
   },
   methods: {
   },
@@ -65,6 +61,13 @@ export default {
       const lastRecord = this.lastRecord;
       return new Date(lastRecord).getFullYear();
     },
+    thumbnail () {
+      const specieData = this.$store.getters.speciesData.find(s => s.taxonId === this.taxonId);
+      const defaultThumbnail = 'https://raw.githubusercontent.com/Ranks/emojione/2.2.7/assets/png_128x128/1f43e.png';
+      if (!(specieData && specieData.images.length)) return defaultThumbnail;
+      const thumbnail = specieData.images[0].thumbnail;
+      return thumbnail || defaultThumbnail;
+    },
   },
 };
 </script>
@@ -73,25 +76,60 @@ export default {
 .specie-li {
   display: flex;
   align-items: center;
+  height: 20vh;
+  padding-top: .5rem;
+  padding-left: .5rem;
+  padding-right: .5rem;
 }
 
 .text-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   flex: 1;
+  height: 100%;
 }
 
 .avatar {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
+  max-width: 25vw;
+  height: 100%;
+  max-height: 100%;
+  margin-right: .5rem;
 }
 
 .avatar img {
-  object-fit: cover;
   width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  mix-blend-mode: multiply;
+}
+
+.taxonomy {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.top-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.observation {
+  display: flex;
+  justify-content: space-between;
+  /*flex-direction: column;*/
+}
+
+.status {
+  background-color: #cedc00;
+  padding: 0 5px 0 5px;
+  border-radius: 5px;
+  /*max-height: 1rem;*/
 }
 
 </style>

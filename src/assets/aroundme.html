@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<!-- saved from url=(0029)http://localhost:8080/species -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>aroundme</title>
+    <link rel="stylesheet" type="text/css" href="./aroundme_files/reset.css">
+  <style type="text/css">
+@font-face {
+  font-family: 'delwp';
+  src: url(/static/fonts/hinted-VIC-Regular.25fc693.woff2) format('woff2');
+       /*url('../assets/fonts/ratio.woff') format('woff'),*/
+       /*url('../assets/fonts/ratio.ttf') format('truetype');*/
+  font-weight: normal;
+  font-style: normal;
+}
+#app[data-v-053878fa] {
+  font-family: 'delwp', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+}
+header[data-v-053878fa] {
+  background-color: #201647;
+  height: 3.125rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.slideLeft[data-v-053878fa] {
+  transition: -webkit-transform 300ms ease;
+  transition: transform 300ms ease;
+  transition: transform 300ms ease, -webkit-transform 300ms ease;
+}
+.displayMenu[data-v-053878fa] {
+  display: block;
+}
+.container[data-v-053878fa] {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+header img[data-v-053878fa] {
+  height: 2.125rem;
+}
+.main[data-v-053878fa] {
+  position: relative;
+  z-index: 1;
+  /*transform: translateX(-268px);*/
+}
+</style><style type="text/css">
+.slideout-menu[data-v-d8df6f36] {
+  -webkit-overflow-scrolling: touch;
+  bottom: 0;
+  left: auto;
+  overflow-y: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 268px;
+  z-index: 0;
+}
+.content[data-v-d8df6f36] { 
+  padding: 1rem;
+}
+h1[data-v-d8df6f36] {
+  font-size: 1.5rem;
+  margin: .5rem;
+}
+h2[data-v-d8df6f36] {
+  font-size: 1.125rem;
+  margin: .25rem;
+}
+.slideout-menu[data-v-d8df6f36]::before {
+  background: #00b7bd;
+  content: '';
+  display: block;
+  height: 3.125rem;
+  width: 100%;
+}
+.position[data-v-d8df6f36] {
+  margin-left: .5rem;
+}
+</style><style type="text/css">
+.homepage-view[data-v-76a353b4] {
+}
+.text-container[data-v-76a353b4] {
+  margin: 1rem;
+}
+.text-intro[data-v-76a353b4] {
+  /*margin-top: 1rem;*/
+}
+.action[data-v-76a353b4] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: .8rem;
+}
+.hero-image[data-v-76a353b4] {
+  height: 15rem;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url(/static/img/Spiny-Rice-Flower.9a8bd02.jpg)
+}
+.homepage-view h1[data-v-76a353b4] {
+ font-size: 2.375rem;
+}
+.homepage-view .browse-button[data-v-76a353b4] {
+  min-height: 36px;
+  margin: 6px 8px;
+  padding: 0 16px;
+  text-align: center;
+  background-color: #00b2a9;
+  border: 0;
+  border-radius: 2px;
+}
+a[data-v-76a353b4] {
+  color: #42b983;
+}
+
+</style><style type="text/css">
+h1[data-v-208fa734], h2[data-v-208fa734] {
+  font-weight: normal;
+}
+ul[data-v-208fa734] {
+  list-style-type: none;
+  padding: 0;
+}
+.pagination[data-v-208fa734] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 1rem;
+}
+.pagination li[data-v-208fa734] {
+  margin-left: .5rem;
+}
+a[data-v-208fa734] {
+  color: #42b983;
+}
+.filter[data-v-208fa734] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: .3rem;
+}
+.specie-li[data-v-208fa734]:nth-child(even) {
+  background-color: #f7f7f7;
+}
+</style><style type="text/css">
+.specie-li[data-v-4f2e485a] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 20vh;
+  padding-top: .5rem;
+  padding-left: .5rem;
+  padding-right: .5rem;
+}
+.text-container[data-v-4f2e485a] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  height: 100%;
+}
+.avatar[data-v-4f2e485a] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  max-width: 25vw;
+  height: 100%;
+  max-height: 100%;
+  margin-right: .5rem;
+}
+.avatar img[data-v-4f2e485a] {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  mix-blend-mode: multiply;
+}
+.taxonomy[data-v-4f2e485a] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.top-row[data-v-4f2e485a] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.observation[data-v-4f2e485a] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  /*flex-direction: column;*/
+}
+.status[data-v-4f2e485a] {
+  background-color: #cedc00;
+  padding: 0 5px 0 5px;
+  border-radius: 5px;
+  /*max-height: 1rem;*/
+}
+
+</style><style type="text/css">
+h1[data-v-4f31d280], h2[data-v-4f31d280] {
+  font-weight: normal;
+}
+h1[data-v-4f31d280] {
+  font-size: 1.5rem;
+}
+.header[data-v-4f31d280] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: .5rem;
+}
+.back-arrow[data-v-4f31d280] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 2rem;
+}
+.taxonomy[data-v-4f31d280] {
+  margin-left: .5rem;
+}
+.taxonomy p[data-v-4f31d280] {
+  overflow: auto;
+  text-overflow: ellipsis;
+}
+h2[data-v-4f31d280] {
+  font-size: 1.125rem;
+}
+ul[data-v-4f31d280] {
+  list-style-type: none;
+  padding: 0;
+}
+li[data-v-4f31d280] {
+  display: inline-block;
+  margin: 0 10px;
+}
+a[data-v-4f31d280] {
+  color: #42b983;
+}
+</style><style type="text/css">
+.images[data-v-8306adbc] {
+  /*background-color: red;*/
+}
+.image-container[data-v-8306adbc] {
+  /*background-color: blue;*/
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  max-width: 100%;
+}
+.image-container img[data-v-8306adbc] {
+  max-height: 40vh;
+  max-width: auto;
+}
+.controls[data-v-8306adbc] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+.nav-button[data-v-8306adbc] {
+  /*background-color: green;*/
+}
+.hidden[data-v-8306adbc] {
+  visibility: hidden;
+}
+.credit[data-v-8306adbc] {
+  margin: .5rem;
+}
+.fade-enter-active[data-v-8306adbc] {
+  transition: all 1s ease;
+  /*overflow: hidden;*/
+  visibility: visible;
+  opacity: 1;
+  /*height: 30vh;*/
+}
+.fade-enter[data-v-8306adbc]{
+  opacity: 0;
+  visibility: hidden;
+}
+.fade-leave[data-v-8306adbc] {
+  /*display: none;*/
+  visibility: hidden;
+}
+
+</style><style type="text/css">
+.card[data-v-ee83a8d8] {
+  background: #fff;
+  border-radius: 2px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 2px;
+  margin: 3px;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-sizing: border-box;
+}
+.card[data-v-ee83a8d8]:nth-child(even) {
+  background: #f7f7f7;
+}
+.row[data-v-ee83a8d8] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+</style><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.17ab46784013bd749461.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.26c93fb4ac688d684a9d.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.e365536aa2651c3ed579.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.a151055acb19cf339a0b.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.c025dec25f45336b751d.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.89d4cff16905755083ff.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.2053efcf31fc2abdf838.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.ec5c23d8b09493b9e875.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.0f5af0170516edaf391b.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.f3424a2a8454096ecb9b.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.e39378f5d43bfcdaf551.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.d67598c798afd5506fb8.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.8e5e645151e440e353d6.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.56969363b8dbdfd39616.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.90de0b795de3b9343e06.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.c0874ad3c8417a136ce2.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.2fad0d326583d57c81b8.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.44ced384f0f8a37e34d3.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.6c49a5dea90520acb04c.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.bb77b8575c71edc398da.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.289e9ee127e7036816af.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.4afbb8e72505c116d31e.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.c6227fc17b504a21ee60.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.aeb5863d68125faa6faa.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.f96422a8e5b6059b6cce.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.504b65b12a84148b455a.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.6a037e7b575b9a8a22cd.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.b37ee3f72f86408549d0.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.8fd2e3d445dcb8dbb0bf.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.06d52837ce34c8aae57b.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.bead9ede30f4838fbbde.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.a704b7f6fdda8a37736f.hot-update.js"></script><script type="text/javascript" charset="utf-8" src="./aroundme_files/0.072b7fd1a5067eab7ba0.hot-update.js"></script></head>
+  <body>
+    <div data-v-053878fa="" id="app"><div data-v-053878fa="" class="main slideLeft" style="transform: translateX(0px);"><header data-v-053878fa=""><div data-v-053878fa="" class="container"><a data-v-053878fa="" href="http://localhost:8080/" class="router-link-active"><img data-v-053878fa="" src="data:image/png;base64,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"></a> <p data-v-053878fa="" style="color: white;">M</p></div></header> <div data-v-208fa734="" data-v-053878fa="" class="hello"><div data-v-208fa734="" class="filter"><p data-v-208fa734="">Sort by :</p> <select data-v-208fa734="" name="filter"><option data-v-208fa734="" value="commonName">Common name</option><option data-v-208fa734="" value="scientificName">Scientific name</option><option data-v-208fa734="" value="flora">Flora</option><option data-v-208fa734="" value="fauna">Fauna</option><option data-v-208fa734="" value="date">Date</option></select></div> <ul data-v-208fa734=""><li data-v-4f2e485a="" data-v-208fa734="" class="specie-li specie-li"><div data-v-4f2e485a="" class="avatar"><img data-v-4f2e485a="" src="./aroundme_files/798824-thumbnail.jpg"></div> <div data-v-4f2e485a="" class="text-container"><div data-v-4f2e485a="" class="taxonomy"><div data-v-4f2e485a="" class="top-row"><p data-v-4f2e485a="">Australian Magpie</p> <!----></div> <p data-v-4f2e485a="">Cracticus tibicen</p></div> <div data-v-4f2e485a="" class="observation"><p data-v-4f2e485a="">2 Observations</p><p data-v-4f2e485a=""></p><p data-v-4f2e485a="">Last from 2000</p></div></div></li><li data-v-4f2e485a="" data-v-208fa734="" class="specie-li specie-li"><div data-v-4f2e485a="" class="avatar"><img data-v-4f2e485a="" src="./aroundme_files/360029-thumbnail.jpg"></div> <div data-v-4f2e485a="" class="text-container"><div data-v-4f2e485a="" class="taxonomy"><div data-v-4f2e485a="" class="top-row"><p data-v-4f2e485a="">Australian Raven</p> <!----></div> <p data-v-4f2e485a="">Corvus coronoides</p></div> <div data-v-4f2e485a="" class="observation"><p data-v-4f2e485a="">1 Observation</p><p data-v-4f2e485a=""></p><p data-v-4f2e485a="">Last from 2000</p></div></div></li><li data-v-4f2e485a="" data-v-208fa734="" class="specie-li specie-li"><div data-v-4f2e485a="" class="avatar"><img data-v-4f2e485a="" src="./aroundme_files/389939-thumbnail.jpg"></div> <div data-v-4f2e485a="" class="text-container"><div data-v-4f2e485a="" class="taxonomy"><div data-v-4f2e485a="" class="top-row"><p data-v-4f2e485a="">Australian White Ibis</p> <!----></div> <p data-v-4f2e485a="">Threskiornis molucca</p></div> <div data-v-4f2e485a="" class="observation"><p data-v-4f2e485a="">1 Observation</p><p data-v-4f2e485a=""></p><p data-v-4f2e485a="">Last from 1999</p></div></div></li><li data-v-4f2e485a="" data-v-208fa734="" class="specie-li specie-li"><div data-v-4f2e485a="" class="avatar"><img data-v-4f2e485a="" src="./aroundme_files/793936-thumbnail.jpg"></div> <div data-v-4f2e485a="" class="text-container"><div data-v-4f2e485a="" class="taxonomy"><div data-v-4f2e485a="" class="top-row"><p data-v-4f2e485a="" style="
+    overflow: auto;
+    text-overflow: ellipsis;
+">Common Blackbird</p> <p data-v-4f2e485a="" class="status">Not native</p></div> <p data-v-4f2e485a="">Turdus merula</p></div> <div data-v-4f2e485a="" class="observation" style="
+    flex-grow: 0;
+"><p data-v-4f2e485a="" style="
+    overflow: auto;
+    text-overflow: ellipsis;
+">1 Observation</p><p data-v-4f2e485a=""></p><p data-v-4f2e485a="">Last from 2000</p></div></div></li><li data-v-4f2e485a="" data-v-208fa734="" class="specie-li specie-li"><div data-v-4f2e485a="" class="avatar"><img data-v-4f2e485a="" src="./aroundme_files/730596-thumbnail.jpg"></div> <div data-v-4f2e485a="" class="text-container"><div data-v-4f2e485a="" class="taxonomy"><div data-v-4f2e485a="" class="top-row"><p data-v-4f2e485a="">Common Myna</p> <p data-v-4f2e485a="" class="status">Not native</p></div> <p data-v-4f2e485a="">Acridotheres tristis</p></div> <div data-v-4f2e485a="" class="observation"><p data-v-4f2e485a="">3 Observations</p><p data-v-4f2e485a=""></p><p data-v-4f2e485a="">Last from 2000</p></div></div></li><li data-v-4f2e485a="" data-v-208fa734="" class="specie-li specie-li"><div data-v-4f2e485a="" class="avatar"><img data-v-4f2e485a="" src="./aroundme_files/907341-thumbnail.jpg"></div> <div data-v-4f2e485a="" class="text-container"><div data-v-4f2e485a="" class="taxonomy"><div data-v-4f2e485a="" class="top-row"><p data-v-4f2e485a="">Common Starling</p> <p data-v-4f2e485a="" class="status">Not native</p></div> <p data-v-4f2e485a="">Sturnus vulgaris</p></div> <div data-v-4f2e485a="" class="observation"><p data-v-4f2e485a="">3 Observations</p><p data-v-4f2e485a=""></p><p data-v-4f2e485a="">Last from 2000</p></div></div></li><li data-v-4f2e485a="" data-v-208fa734="" class="specie-li specie-li"><div data-v-4f2e485a="" class="avatar"><img data-v-4f2e485a="" src="./aroundme_files/389920-thumbnail.jpg"></div> <div data-v-4f2e485a="" class="text-container"><div data-v-4f2e485a="" class="taxonomy"><div data-v-4f2e485a="" class="top-row"><p data-v-4f2e485a="">Crested Tern</p> <!----></div> <p data-v-4f2e485a="">Thalasseus bergii</p></div> <div data-v-4f2e485a="" class="observation"><p data-v-4f2e485a="">1 Observation</p><p data-v-4f2e485a=""></p><p data-v-4f2e485a="">Last from 1999</p></div></div></li><li data-v-4f2e485a="" data-v-208fa734="" class="specie-li specie-li"><div data-v-4f2e485a="" class="avatar"><img data-v-4f2e485a="" src="./aroundme_files/730656-thumbnail.jpg"></div> <div data-v-4f2e485a="" class="text-container"><div data-v-4f2e485a="" class="taxonomy"><div data-v-4f2e485a="" class="top-row"><p data-v-4f2e485a="">Dusky Moorhen</p> <!----></div> <p data-v-4f2e485a="">Gallinula tenebrosa</p></div> <div data-v-4f2e485a="" class="observation"><p data-v-4f2e485a="">1 Observation</p><p data-v-4f2e485a=""></p><p data-v-4f2e485a="">Last from 2000</p></div></div></li></ul> <ul data-v-208fa734="" class="pagination"><li data-v-208fa734=""><button data-v-208fa734="" href="#" class="current">1</button></li><li data-v-208fa734=""><button data-v-208fa734="" href="#" class="">2</button></li><!----><!----><li data-v-208fa734=""><button data-v-208fa734="" href="#" class="last">5</button></li></ul></div></div> <div data-v-d8df6f36="" data-v-053878fa="" class="slideout-menu" style="display: none;"><div data-v-d8df6f36="" class="content"><h1 data-v-d8df6f36="">Settings</h1> <h2 data-v-d8df6f36="">Position :</h2> <div data-v-d8df6f36="" class="position"><label data-v-d8df6f36="">Latitude <input data-v-d8df6f36="" type="number" placeholder="unknown"></label> <label data-v-d8df6f36="">Longitude <input data-v-d8df6f36="" type="number" placeholder="unknown"></label></div> <label data-v-d8df6f36="" for="selectRadius"><h2 data-v-d8df6f36="">Search radius :</h2></label> <select data-v-d8df6f36="" name="selectRadius"><option data-v-d8df6f36="" value="50">50 meters</option><option data-v-d8df6f36="" value="100">100 meters</option><option data-v-d8df6f36="" value="150">150 meters</option><option data-v-d8df6f36="" value="200">200 meters</option><option data-v-d8df6f36="" value="250">250 meters</option><option data-v-d8df6f36="" value="500">500 meters</option></select> <div data-v-d8df6f36="" class="stats"><h2 data-v-d8df6f36="">Stats : </h2> <p data-v-d8df6f36="">33 species found</p></div></div></div></div>
+    <!-- built files will be auto injected -->
+  <script type="text/javascript" src="./aroundme_files/app.js"></script>
+
+</body></html>

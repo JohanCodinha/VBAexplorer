@@ -17,7 +17,14 @@ export default {
     Vue.set(state, 'searchRadius', radius);
   },
   [types.ADD_SPECIE] (state, specie) {
-    Vue.set(state, 'species', [...state.species, specie]);
+    const specieInStoreIndex = state.species.findIndex(s => s.taxonId === specie.taxonId);
+    if (specieInStoreIndex > -1) {
+      console.log(`replacing ${state.species[specieInStoreIndex].scientificName} from store`);
+      state.species.splice(specieInStoreIndex, 1, specie);
+      Vue.set(state, 'species', [...state.species]);
+    } else {
+      Vue.set(state, 'species', [...state.species, specie]);
+    }
   },
   [types.ADD_RECORDS] (state, records) {
     Vue.set(state, 'records', [...state.records, ...records]);
