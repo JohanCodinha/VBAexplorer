@@ -1,0 +1,10 @@
+{
+ "name": "vbascan",
+  "version": "1.0.0",
+  "description": "Browse the Victorian Bio Atlas records while on the move.",
+  "author": "Johan Codinha <johan@codinha.net>",
+ "private": true,
+ "scripts": {
+   "postinstall": "npm install express"
+ }
+}
