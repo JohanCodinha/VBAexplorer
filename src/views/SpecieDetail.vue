@@ -2,7 +2,7 @@
   <div class="specie-detail">
   <div class="header">
     <div class="back-arrow">
-    <router-link to="/species"><p>🡸</p></router-link>
+    <router-link to="/species"><p>&larr;</p></router-link>
     </div>
     <div class="taxonomy">
       <h1>{{ commonName }}</h1>
