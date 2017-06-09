@@ -7,7 +7,7 @@
     <div class="text-container">
       <div class="taxonomy">
       <div class="top-row">
-        <p>{{commonName}}</p>
+        <p class="common-name">{{commonName}}</p>
         <p v-if="conservationStatus" class="status">{{conservationStatus}}</p>
       </div>
         <p>{{scientificName}}</p>
@@ -76,16 +76,16 @@ export default {
 .specie-li {
   display: flex;
   align-items: center;
-  height: 20vh;
-  padding-top: .5rem;
-  padding-left: .5rem;
-  padding-right: .5rem;
+  height: 15vh;
+  padding: .5rem;
+  /*padding-left: .5rem;*/
+  /*padding-right: .5rem;*/
 }
 
 .text-container {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: column; 
+  justify-content: space-between;
   flex: 1;
   height: 100%;
 }
@@ -112,6 +112,10 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.common-name {
+  font-size: 1.3rem;
 }
 
 .top-row {

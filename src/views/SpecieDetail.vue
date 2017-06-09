@@ -1,64 +1,64 @@
 <template>
   <div class="specie-detail">
-  <div class="header">
-    <div class="back-arrow">
-    <router-link to="/species"><p>&larr;</p></router-link>
+    <div class="header">
+      <div class="back-arrow">
+      <router-link to="/species"><p>&larr;</p></router-link>
+      </div>
+      <div class="taxonomy">
+        <h1>{{ commonName }}</h1>
+        <h2>{{ scientificName }}</h2>
+      </div>
     </div>
-    <div class="taxonomy">
-      <h1>{{ commonName }}</h1>
-      <h2>{{ scientificName }}</h2>
+      <imgSlider v-if="images.length"
+        :images="images"></imgSlider>
+    <div class="content">
+      <ul v-if="description || biology || distribution">
+        <accordion
+          :title="'Habitat'"
+          :text="habitat"
+          v-if="habitat"
+          ></accordion>
+        <accordion
+          :title="'Biology'"
+          :text="biology"
+          v-if="biology"
+          ></accordion>
+        <accordion
+          :title="'Distribution'"
+          :text="distribution"
+          v-if="distribution"
+          ></accordion>
+      </ul>
+      <h2>Records : </h2>
+      <ul>
+        <record v-for="record in records"
+          :observerName="record.observerFullName"
+          :method="record.samplingMethodCde"
+          :startDate="record.surveyStartSdt"
+          :count="record.totalCountInt"
+          :accuracy="record.latLongAccuracyddNum"
+          :projectId="record.projectId"
+          :distance="record.distance">
+        </record>
+      </ul>
     </div>
   </div>
-    <imgSlider v-if="images.length"
-      :images="images"></imgSlider>
-    <template v-if="description">
-      <ul>
-        <li v-if="description">
-          <h3>Description :</h3>
-          <p>{{description}}</p>
-        </li>
-        <li v-if="habitat">
-          <h3>Habitat</h3>
-          <p>{{habitat}}</p>
-        </li>
-        <li v-if="biology">
-          <h3>Biology</h3>
-          <p>{{biology}}</p>
-        </li>
-        <li v-if="distribution">
-          <h3>Distribution</h3>
-          <p>{{distribution}}</p>
-        </li>
-      </ul>
-    </template>
-    <h2>Records : </h2>
-    <ul>
-      <record v-for="record in records"
-        :observerName="record.observerFullName"
-        :method="record.samplingMethodCde"
-        :startDate="record.surveyStartSdt"
-        :count="record.totalCountInt"
-        :accuracy="record.latLongAccuracyddNum"
-        :projectId="record.projectId"
-        :distance="record.distance">
-      </record>
-    </ul>
-    <!-- {{ $data }}   -->
-    </div>
 </template>
 
 <script>
 import imgSlider from '../components/imgSlider';
 import recordListItem from '../components/recordListItem';
+import accordion from '../components/accordion';
 
 export default {
   name: 'hello',
   components: {
     imgSlider,
     record: recordListItem,
+    accordion,
   },
   data () {
-    const taxonId = this.$route.params.taxonId;
+    const taxonId = parseInt(this.$route.params.taxonId, 10);
     const specie = this.$store.getters.species.find(s => s.taxonId === taxonId);
     const specieData = this.$store.getters.speciesData.find(s => s.taxonId === taxonId);
     const records = this.$store.getters.records.filter(r => r.taxonId === taxonId);
@@ -102,6 +102,10 @@ h1 {
   margin: .5rem;
 }
 
+.content {
+  margin: .5rem;
+}
+
 .back-arrow {
   display: flex;
   justify-content: center;
@@ -129,7 +133,6 @@ ul {
 
 li {
   display: inline-block;
-  margin: 0 10px;
 }
 
 a {
