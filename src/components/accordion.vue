@@ -34,6 +34,10 @@ export default {
 </script>
 
 <style scoped>
+.accordion-item {
+  width: 100%;
+}
+
 .toggle-content {
   max-height: inherit;
   opacity: 1;
