@@ -2,10 +2,12 @@
   <div class="hello">
     <div class="filter">
       <p>Sort by :</p>
-      <select name="filter" v-model="selectedFilter">
-        <option v-for="filter in filters"
-          :value="filter.value">{{ filter.text }}</option>
-      </select>
+      <div class="select-wrapper">
+        <select name="filter" v-model="selectedFilter">
+          <option v-for="filter in filters"
+            :value="filter.value">{{ filter.text }}</option>
+        </select>
+      </div>
     </div>
     <ul>
       <!-- <template v-for="specie in paginated">       -->
@@ -63,11 +65,14 @@ export default {
       return this.$store.getters.species;
     },
     paginated () {
-      const filtered = this.filter(this.species);
+      const filtered = this.filtered;
       return this.paginate(filtered);
     },
+    filtered () {
+      return this.filter(this.species);
+    },
     totalPages () {
-      return Math.ceil(this.species.length / this.itemsPerPage);
+      return Math.ceil(this.filtered.length / this.itemsPerPage);
     },
   },
   methods: {
@@ -189,11 +194,24 @@ a {
 }
 
 .filter select {
+  appearance: none;
+  border-radius: 0;
   font-family: inherit;
   background-color: transparent;
   padding: 0;
   border: none;
   border-bottom: 1px solid #42b983;
+}
+
+.select-wrapper::after {
+  content: '▾';
+  color: #42b983;
+  display: inline-block;
+  margin-left: .5rem;
+  pointer-events: none;
+  /*position: absolute;*/
+  /*right: 10px;*/
+  /*top: 15px;*/
 }
 
 .specie-li:nth-child(even) {
