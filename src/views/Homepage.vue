@@ -7,11 +7,11 @@
       <h1>Bio scan</h1>
       <h2>Explore nearby recording of species.</h2>
         <div class="action">
-          <button class="browse-button" :disabled="button.state" @click="browse">{{button.message}}</button>
+          <button class="explore-button" :disabled="button.state" @click="browse">{{button.message}}</button>
         </div>
       <div class="text-intro">
-        <p>Specie's records are provided by the <a href="https://vba.dse.vic.gov.au/vba/">Victorian Biodiversity Atlas</a>.
-        Biodiversity knowledge is comming from : </p>
+        <p>Specie's records are provided by the <a href="https://vba.dse.vic.gov.au/vba/">Victorian Biodiversity Atlas</a>.</p>
+        <p>Biodiversity knowledge is comming from :</p>
         <ul>
           <li><a href="https://museumvictoria.com.au">Museums Victoria</a></li>
           <li><a href="https://www.ala.org.au/">Atlas of Living Australia</a></li>
@@ -35,7 +35,7 @@ export default {
   data () {
     return {
       button: {
-        message: 'Browse',
+        message: 'Explore',
         disabled: false,
       },
     };
@@ -62,15 +62,8 @@ export default {
 
 <style scoped>
 
-.homepage-view {
-}
-
 .text-container {
   margin: 1rem;
-}
-
-.text-intro {
-  /*margin-top: 1rem;*/
 }
 
 .action {
@@ -91,7 +84,7 @@ export default {
  font-size: 2.375rem;
 }
 
-.homepage-view .browse-button {
+.homepage-view .explore-button {
   min-height: 36px;
   margin: 6px 8px;
   padding: 0 16px;
@@ -99,6 +92,8 @@ export default {
   background-color: #00b2a9;
   border: 0;
   border-radius: 2px;
+  letter-spacing: 0.12rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
 }
 
 a {

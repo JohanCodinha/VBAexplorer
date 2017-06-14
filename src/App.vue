@@ -130,7 +130,7 @@ header {
 
 .menu-burger-inner {
   transition: all 0.35s ease;
-  background: white; /* #201647 */
+  background: #201647;
   display: block;
   height: 0.125rem;
   position: absolute;
@@ -139,7 +139,7 @@ header {
 }
 
 .menu-burger-inner-active {
-  /*background: #00b7bd;*/
+  background: #00b7bd;
   width: 0;
 }
 
@@ -168,7 +168,7 @@ header {
     -webkit-transition: all 0.15s ease;
     -moz-transition: all 0.15s ease;
     transition: all 0.15s ease;
-    background: inherit;
+    background: #201647;
     content: '';
     display: block;
     height: 0.125rem;

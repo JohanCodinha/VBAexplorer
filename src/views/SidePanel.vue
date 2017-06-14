@@ -79,7 +79,7 @@ export default {
 
 h1 {
   font-size: 1.5rem;
-  margin: .5rem;
+  margin: .5rem 0 .5rem 0;
 }
 
 h2 {
