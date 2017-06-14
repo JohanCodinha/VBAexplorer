@@ -188,6 +188,14 @@ a {
   padding: .3rem;
 }
 
+.filter select {
+  font-family: inherit;
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  border-bottom: 1px solid #42b983;
+}
+
 .specie-li:nth-child(even) {
   background-color: #f7f7f7;
 }

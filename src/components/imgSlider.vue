@@ -10,12 +10,12 @@
         <button @click="previous"
           :class="{hidden: (!this.selectedImg > 0)}"
           class="nav-button">
-          <p>prev</p>
+          <p>Prev</p>
         </button>
         <button @click="next"
           :class="{hidden: (this.selectedImg >= this.images.length - 1)}"
           class="nav-button">
-          <p>next</p>
+          <p>Next</p>
         </button>
       </div>
     </div>
@@ -61,6 +61,7 @@ export default {
 <style scoped>
 .images {
   /*background-color: red;*/
+  max-width: 100vw;
 }
 
 .image-container {
@@ -68,19 +69,27 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 100%; 
+  max-width: 100%;
+  height: 40vh;
 }
 .image-container img {
-  max-height: 40vh;
-  max-width: auto;
+  height: auto;
+  max-height: 100%;
+  max-width: 100%;
 }
 .controls {
   display: flex;
   justify-content: space-around;
+  margin: .5rem;
 }
 
 .nav-button {
-  /*background-color: green;*/
+  background-color: #42b983;
+  border: none;
+  height: 1.5rem;
+  padding: 0 1rem 0 1rem;
+  color: white;
+  font-weight: bold;
 }
 .hidden {
   visibility: hidden;

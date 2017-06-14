@@ -14,6 +14,11 @@
     <div class="content">
       <ul v-if="description || biology || distribution">
         <accordion
+          :title="'Description'"
+          :text="description"
+          v-if="description"
+          ></accordion>
+        <accordion
           :title="'Habitat'"
           :text="habitat"
           v-if="habitat"
@@ -29,18 +34,20 @@
           v-if="distribution"
           ></accordion>
       </ul>
-      <h2>Records : </h2>
-      <ul>
-        <record v-for="record in records"
-          :observerName="record.observerFullName"
-          :method="record.samplingMethodCde"
-          :startDate="record.surveyStartSdt"
-          :count="record.totalCountInt"
-          :accuracy="record.latLongAccuracyddNum"
-          :projectId="record.projectId"
-          :distance="record.distance">
-        </record>
-      </ul>
+      <div class="records">
+        <h2>Records</h2>
+        <ul>
+          <record v-for="record in records"
+            :observerName="record.observerFullName"
+            :method="record.samplingMethodCde"
+            :startDate="record.surveyStartSdt"
+            :count="record.totalCountInt"
+            :accuracy="record.latLongAccuracyddNum"
+            :projectId="record.projectId"
+            :distance="record.distance">
+          </record>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -121,6 +128,14 @@ h1 {
   overflow: auto;
   text-overflow: ellipsis;
 }
+
+.records {
+  margin-top: 1rem;
+}
+
+/*.records h2 {
+  font-size: 1.2rem;
+}*/
 
 h2 {
   font-size: 1.125rem;

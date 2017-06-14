@@ -35,7 +35,7 @@ export default {
 
 <style scoped>
 .accordion-item {
-  width: 100%;
+  width: 100%
 }
 
 .toggle-content {
