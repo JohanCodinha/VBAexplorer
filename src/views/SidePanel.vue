@@ -3,18 +3,20 @@
     <div class="content">
       <h1>Settings</h1>
       <h2>Position :</h2>
-      <div class="position">
+      <div class="content-text">
         <label>Latitude <input type="number" :value="latitude" placeholder="unknown"></label>
         <label>Longitude <input type="number" :value="longitude" placeholder="unknown"></label>
       </div>
       <!-- <h2>Search radius :</h2> -->
       <label for="selectRadius"><h2>Search radius :</h2></label>
-      <select name="selectRadius" v-model="searchRadius">
-        <option v-for="option in radiusOptions"
-          :value="option.value">{{ option.text }}</option>
-      </select>
-      <div class="stats">
-        <h2>Stats : </h2>
+      <div class="select-wrapper content-text">
+        <select name="selectRadius" v-model="searchRadius">
+          <option v-for="option in radiusOptions"
+            :value="option.value">{{ option.text }}</option>
+        </select>
+      </div>
+      <h2>Stats : </h2>
+      <div class="stats content-text">
         <p>{{ speciesCount }} species found</p>
       </div>
     </div>
@@ -44,6 +46,8 @@ export default {
       get () { return this.$store.getters.searchRadius; },
       set (value) {
         this.$store.commit('SET_SEARCH_RADIUS', value);
+        this.$store.dispatch('SEARCH_SPECIES')
+          .then(e => console.log(e));
       },
     },
     latitude () {
@@ -90,7 +94,27 @@ h2 {
   height: 3.125rem;
   width: 100%;
 }
-.position {
+
+.content-text {
   margin-left: .5rem;
 }
+
+select {
+  appearance: none;
+  border-radius: 0;
+  font-family: inherit;
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  border-bottom: 1px solid #42b983;
+}
+
+.select-wrapper::after {
+  content: '▾';
+  color: #42b983;
+  display: inline-block;
+  margin-left: .5rem;
+  pointer-events: none;
+}
+
 </style>

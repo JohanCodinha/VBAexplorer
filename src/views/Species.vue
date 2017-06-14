@@ -1,12 +1,15 @@
 <template>
   <div class="hello">
     <div class="filter">
-      <p>Sort by :</p>
-      <div class="select-wrapper">
-        <select name="filter" v-model="selectedFilter">
-          <option v-for="filter in filters"
-            :value="filter.value">{{ filter.text }}</option>
-        </select>
+      <p>{{species.length}} species found</p>
+      <div>
+        <p>Sort by :</p>
+        <div class="select-wrapper">
+          <select name="filter" v-model="selectedFilter">
+            <option v-for="filter in filters"
+              :value="filter.value">{{ filter.text }}</option>
+          </select>
+        </div>
       </div>
     </div>
     <ul>
@@ -186,10 +189,11 @@ ul {
 a {
   color: #42b983;
 }
+
 .filter {
   display: flex;
   justify-content: space-around;
-  align-items: center;
+  align-items: flex-end;
   padding: .3rem;
 }
 
@@ -209,9 +213,6 @@ a {
   display: inline-block;
   margin-left: .5rem;
   pointer-events: none;
-  /*position: absolute;*/
-  /*right: 10px;*/
-  /*top: 15px;*/
 }
 
 .specie-li:nth-child(even) {
