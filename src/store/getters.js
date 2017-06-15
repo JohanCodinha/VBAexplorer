@@ -14,7 +14,7 @@ const distanceBetweenCoordinates = (lat1, lon1, lat2, lon2) => {
 
 export const searchArea = (state) => {
   const position = state.position;
-  if (position) {
+  if (position.latitude || position.longitude) {
     return {
       lat: position.latitude,
       long: position.longitude,

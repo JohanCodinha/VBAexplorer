@@ -3,8 +3,12 @@ import axios from 'axios';
 function validateResponse (response, taxonomy) {
   if (!response) return false;
   const validSpecie = response.data.data.filter((specie) => {
-    const resultScientificName = specie.scientificName.toLowerCase();
-    const specieScientificName = taxonomy.scientificName.toLowerCase();
+    const resultScientificName = specie.scientificName
+      ? specie.scientificName.toLowerCase()
+      : undefined;
+    const specieScientificName = taxonomy.scientificName
+      ? taxonomy.scientificName.toLowerCase()
+      : undefined;
     const scientificNameMatch = resultScientificName === specieScientificName;
     return scientificNameMatch;
   });

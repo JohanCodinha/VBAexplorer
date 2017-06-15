@@ -113,8 +113,12 @@ export default {
 
     byCommonName (list) {
       const filteredSpecies = list.sort((a, b) => {
-        const nameA = a.commonName.toLowerCase();
-        const nameB = b.commonName.toLowerCase();
+        const nameA = a.commonName
+         ? a.commonName.toLowerCase()
+         : undefined;
+        const nameB = b.commonName
+          ? b.commonName.toLowerCase()
+          : undefined;
         if (nameA < nameB) return -1; // sort string ascending
         if (nameA > nameB) return 1;
         return 0; // default return value (no sorting)
@@ -124,8 +128,12 @@ export default {
 
     byScientificName (list) {
       const filteredSpecies = list.sort((a, b) => {
-        const nameA = a.scientificDisplayName.toLowerCase();
-        const nameB = b.scientificDisplayName.toLowerCase();
+        const nameA = a.scientificDisplayName
+          ? a.scientificDisplayName.toLowerCase()
+          : undefined;
+        const nameB = b.scientificDisplayName
+          ? b.scientificDisplayName.toLowerCase()
+          : undefined;
         if (nameA < nameB) return -1; // sort string ascending
         if (nameA > nameB) return 1;
         return 0; // default return value (no sorting)

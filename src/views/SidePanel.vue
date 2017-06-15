@@ -4,8 +4,8 @@
       <h1>Settings</h1>
       <h2>Position :</h2>
       <div class="content-text">
-        <label>Latitude <input type="number" :value="latitude" placeholder="unknown"></label>
-        <label>Longitude <input type="number" :value="longitude" placeholder="unknown"></label>
+        <label>Latitude <input type="number" v-model.number="latitude" placeholder="unknown"></label>
+        <label>Longitude <input type="number" v-model.number="longitude" placeholder="unknown"></label>
       </div>
       <!-- <h2>Search radius :</h2> -->
       <label for="selectRadius"><h2>Search radius :</h2></label>
@@ -50,11 +50,17 @@ export default {
           .then(e => console.log(e));
       },
     },
-    latitude () {
-      return this.$store.getters.searchArea.lat;
+    latitude: {
+      get () { return this.$store.getters.searchArea.lat; },
+      set (value) {
+        this.$store.commit('SET_POSITION', { latitude: value });
+      },
     },
-    longitude () {
-      return this.$store.getters.searchArea.long;
+    longitude: {
+      get () { return this.$store.getters.searchArea.long; },
+      set (value) {
+        this.$store.commit('SET_POSITION', { longitude: value });
+      },
     },
   },
 };

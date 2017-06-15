@@ -11,7 +11,18 @@ export default {
   },
   [types.SET_POSITION] (state, { latitude, longitude, accuracy }) {
     const timestamp = Date.now();
-    Vue.set(state, 'position', { latitude, longitude, accuracy, timestamp });
+    const previousLat = state.position.latitude;
+    const previousLon = state.position.longitude;
+    const previousAccu = state.position.accuracy;
+
+    const position = {
+      latitude: latitude || previousLat,
+      longitude: longitude || previousLon,
+      accuracy: accuracy || previousAccu,
+      timestamp,
+    };
+
+    Vue.set(state, 'position', position);
   },
   [types.SET_SEARCH_RADIUS] (state, radius) {
     Vue.set(state, 'searchRadius', radius);

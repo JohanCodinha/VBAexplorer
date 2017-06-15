@@ -18,11 +18,6 @@ export const FETCH_TOKEN = ({ commit }) =>
   }).catch(err => console.log(err));
 
 export const GET_POSITION = ({ commit }) => {
-  // commit(types.SET_POSITION, {
-  //   accuracy: '12',
-  //   latitude: '-36.731842',
-  //   longitude: '147.812758',
-  // });
   const options = {
     enableHighAccuracy: true,
     timeout: 10000,

@@ -88,6 +88,9 @@ export default {
   justify-content: space-between;
   flex: 1;
   height: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .avatar {
@@ -95,6 +98,7 @@ export default {
   justify-content: center;
   align-items: center;
   max-width: 25vw;
+  min-width: 25vw;
   height: 100%;
   max-height: 100%;
   margin-right: .5rem;
@@ -111,13 +115,18 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  white-space: normal;
 }
 
 .common-name {
   font-size: 1.3rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .top-row {
+  white-space: nowrap;
   display: flex;
   justify-content: space-between;
 }
@@ -125,6 +134,9 @@ export default {
 .observation {
   display: flex;
   justify-content: space-between;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   /*flex-direction: column;*/
 }
 

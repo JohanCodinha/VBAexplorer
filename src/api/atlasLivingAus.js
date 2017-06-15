@@ -2,10 +2,18 @@ import axios from 'axios';
 
 function validateResponse (response, taxonomy) {
   const validSpecie = response.filter((specie) => {
-    const resultScientificName = specie.scientificName.toLowerCase();
-    const specieScientificName = taxonomy.scientificName.toLowerCase();
-    const resultCommonName = specie.commonNameSingle.toLowerCase();
-    const specieCommonName = taxonomy.commonName.toLowerCase();
+    const resultScientificName = specie.scientificName
+      ? specie.scientificName.toLowerCase()
+      : undefined;
+    const specieScientificName = taxonomy.scientificName
+      ? taxonomy.scientificName.toLowerCase()
+      : undefined;
+    const resultCommonName = specie.commonNameSingle
+      ? specie.commonNameSingle.toLowerCase()
+      : undefined;
+    const specieCommonName = taxonomy.commonName
+      ? taxonomy.commonName.toLowerCase()
+      : undefined;
     const scientificNameMatch = resultScientificName === specieScientificName;
     const commonNameMatch = resultCommonName === specieCommonName;
     return scientificNameMatch || commonNameMatch;
