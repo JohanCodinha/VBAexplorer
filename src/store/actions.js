@@ -170,11 +170,13 @@ export const HYDRATE_SPECIE = async ({ commit, getters, dispatch }, specie) => {
   if (biota === 'Flora') {
     specieData = await searchHerbariumSpecies(taxonomy) ||
       await searchALASpecies(taxonomy) ||
-      await searchMuseumSpecies(taxonomy);
+      await searchMuseumSpecies(taxonomy) ||
+      { images: [] };
   } else {
     specieData = await searchMuseumSpecies(taxonomy) ||
       await searchALASpecies(taxonomy) ||
-      await searchHerbariumSpecies(taxonomy);
+      await searchHerbariumSpecies(taxonomy) ||
+      { images: [] };
   }
   // add taxonId to specieData
   specieData.taxonId = taxonId;

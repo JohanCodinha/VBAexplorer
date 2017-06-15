@@ -30,7 +30,7 @@ export default {
   [types.ADD_SPECIE] (state, specie) {
     const specieInStoreIndex = state.species.findIndex(s => s.taxonId === specie.taxonId);
     if (specieInStoreIndex > -1) {
-      console.log(`replacing ${state.species[specieInStoreIndex].scientificName} from store`);
+      // console.log(`replacing ${state.species[specieInStoreIndex].scientificName} from store`);
       state.species.splice(specieInStoreIndex, 1, specie);
       Vue.set(state, 'species', [...state.species]);
     } else {
@@ -44,3 +44,6 @@ export default {
     Vue.set(state, 'speciesData', [...state.speciesData, specieData]);
   },
 };
+
+// -37.81617301
+// 144.9631692

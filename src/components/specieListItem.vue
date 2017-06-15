@@ -78,8 +78,6 @@ export default {
   align-items: center;
   height: 15vh;
   padding: .5rem;
-  /*padding-left: .5rem;*/
-  /*padding-right: .5rem;*/
 }
 
 .text-container {
@@ -134,17 +132,21 @@ export default {
 .observation {
   display: flex;
   justify-content: space-between;
+}
+
+.observation p:first-child {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  /*flex-direction: column;*/
 }
 
 .status {
   background-color: #cedc00;
   padding: 0 5px 0 5px;
   border-radius: 5px;
-  /*max-height: 1rem;*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 </style>
